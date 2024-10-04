@@ -1,3 +1,10 @@
 .text-stoke-primary-color {
   -webkit-text-stroke: 1px #555;
 }
+#maintenance > div > a > span {
+  position: relative;
+  top: 2px;
+}
+.settingIcon {
+  margin-left: 6px;
+}

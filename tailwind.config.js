@@ -10,6 +10,9 @@ export default {
       colors: {
         primaryColor: "#AE2B00",
       },
+      width: {
+        22: "5.5rem",
+      },
     },
   },
   plugins: [],

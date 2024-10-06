@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         poppins: ["poppins"],
         inter: ["inter"],
+        nunito:["Nunito"]
       },
       colors: {
         primaryColor: "#AE2B00",

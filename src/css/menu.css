@@ -1,0 +1,25 @@
+.icon{
+    top:0;
+    position:absolute;
+    height:100%;
+ 
+    align-items:center;
+   
+  
+    width:80px;
+}
+.icon:first-child{
+    left:0;
+
+    background: linear-gradient(90deg,rgb(243 244 246) 70%,transparent );
+}
+.icon:last-child{
+
+    right:0;
+    justify-content: end;
+    background: linear-gradient(-90deg,rgb(243 244 246) 70%,transparent );
+}
+
+#tabBox{
+    scroll-behavior: smooth;
+}

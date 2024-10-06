@@ -1,4 +1,4 @@
-import Icon from "../assets/icon.png";
+import Icon from "../assets/images/icon.png";
 import React, { useState } from "react";
 import "../css/sidebar.css";
 import {
@@ -16,16 +16,17 @@ import {
 } from "hugeicons-react";
 const SideBar: React.FC = () => {
   const [sideBarExpand, setSideBarExpand] = useState<boolean>(true);
-
+  
   const click: () => void = () => {
     setSideBarExpand(!sideBarExpand);
   };
 
   return (
     <nav
-      className={`bg-white flex flex-col overflow-hidden whitespace-nowrap transition-all duration-300  ${
-        sideBarExpand ? "w-72" : "w-22 shadow-md"
+      className={`bg-white flex flex-col overflow-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0 ${
+        sideBarExpand ? "w-72" : "w-22 "
       }`}
+ 
     >
       <div className="px-5 flex items-center gap-3 py-7 ">
         <div
@@ -153,7 +154,7 @@ const SideBar: React.FC = () => {
       </div>
       <div className="px-4 py-8 flex flex-col items-end gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-2 *:font-semibold *:font-poppins">
         <button
-          className="bg-primaryColor/10 text-primaryColor shadow-xl shadow-primaryColor/20"
+          className="border text-gray-500"
           onClick={click}
         >
           <ArrowLeft03Icon

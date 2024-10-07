@@ -1,5 +1,5 @@
 import Icon from "../assets/images/icon.png";
-import React, { useState } from "react";
+import React from "react";
 import "../css/sidebar.css";
 import {
   ShoppingBag01Icon,
@@ -14,19 +14,17 @@ import {
   Settings03Icon,
   UserListIcon,
 } from "hugeicons-react";
-const SideBar: React.FC = () => {
-  const [sideBarExpand, setSideBarExpand] = useState<boolean>(true);
-  
-  const click: () => void = () => {
-    setSideBarExpand(!sideBarExpand);
-  };
 
+interface Props {
+  sideBarExpand: boolean;
+  toggleSideBar: () => void;
+}
+const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
   return (
     <nav
-      className={`bg-white flex flex-col overflow-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0 ${
+      className={`bg-white flex flex-col overflow-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${
         sideBarExpand ? "w-72" : "w-22 "
       }`}
- 
     >
       <div className="px-5 flex items-center gap-3 py-7 ">
         <div
@@ -43,7 +41,7 @@ const SideBar: React.FC = () => {
           </span>
         </div>
       </div>
-      <div className="px-4 py-8 flex flex-col  flex-1 font-semibold font-poppins overflow-y-auto overflow-x-hidden">
+      <div className="px-4 py-8 flex flex-col  font-semibold font-poppins overflow-y-auto overflow-x-hidden">
         <div
           id="default"
           className=" flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-8  border-gray-150 border-b pb-3"
@@ -153,10 +151,7 @@ const SideBar: React.FC = () => {
         </div>
       </div>
       <div className="px-4 py-8 flex flex-col items-end gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-2 *:font-semibold *:font-poppins">
-        <button
-          className="border text-gray-500"
-          onClick={click}
-        >
+        <button className="border text-gray-500" onClick={toggleSideBar}>
           <ArrowLeft03Icon
             size={24}
             className={`transition-transform duration-500 ${

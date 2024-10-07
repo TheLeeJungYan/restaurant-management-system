@@ -1,9 +1,10 @@
 import DishIcon from "../assets/icons/dish.svg";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useContext  } from "react";
 import "../css/menu.css";
 import Counter from "../components/Counter";
 import BasketIcon from "../assets/icons/basket.svg";
 import { ArrowLeftDoubleIcon, ArrowRightDoubleIcon } from "hugeicons-react";
+import { BasketContext } from '../App';
 interface Product {
   id: number;
   name: string;
@@ -16,6 +17,12 @@ interface props {
 }
 
 const Menu: React.FC<props> = ({ products }) => {
+  const basketContext  = useContext(BasketContext);
+  if(!basketContext){
+    return;
+  }
+  const {quantities,basketItems,addToQuantities,addToBasket} = basketContext;
+  
   const [leftIconShow, setLeftIconShow] = useState<boolean>(false);
   const [rightIconShow, setRightIconShow] = useState<boolean>(true);
   const tabBox = useRef<HTMLDivElement>(null);
@@ -141,7 +148,7 @@ const Menu: React.FC<props> = ({ products }) => {
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <Counter />
+                    <Counter id={p.id} quantities={quantities} addToQuantities={addToQuantities}/>
                     <button className="bg-primaryColor h-fit rounded-full px-2 py-2 text-white shadow-md shadow-primaryColor">
                       <img src={BasketIcon} className="w-5 h-5" />
                     </button>

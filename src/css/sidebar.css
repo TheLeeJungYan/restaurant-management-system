@@ -1,10 +1,27 @@
 .text-stoke-primary-color {
   -webkit-text-stroke: 1px #555;
 }
-#maintenance > div > a > span {
+#maintenance > div > a > span, .main>div>a>span {
   position: relative;
   top: 2px;
 }
 .settingIcon {
   margin-left: 6px;
+}
+nav{
+  scrollbar-gutter: stable;
+}
+
+nav::-webkit-scrollbar {
+  width: 1rem;               /* width of the entire scrollbar */
+}
+nav::-webkit-scrollbar-track{
+  background:#fff
+}
+
+nav::-webkit-scrollbar-thumb {
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 5px solid #fff;  /* creates padding around scroll thumb */
+  height:10px;
 }

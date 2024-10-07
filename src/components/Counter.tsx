@@ -1,10 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { PlusSignIcon, MinusSignIcon } from "hugeicons-react";
-const Counter: React.FC = () => {
+interface Props{
+  id:number,
+  quantities:{ [key: number]: number } | null;
+  addToQuantities:(id:number,qty:number)=>void;
+}
+const Counter: React.FC<Props> = ({id,quantities,addToQuantities}) => {
   const [number, setNumber] = useState<number>(1);
+  
+
+  useEffect(()=>{
+    addToQuantities(id,number);
+  },[number])
+  
+  
   const minus: () => void = () => {
     let currentNumber = number;
-    console.log("adad");
     if (currentNumber > 1) {
       setNumber(--currentNumber);
     }

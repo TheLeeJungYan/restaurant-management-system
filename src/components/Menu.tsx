@@ -1,10 +1,10 @@
-import DishIcon from "../assets/icons/dish.svg";
-import React, { useRef, useState,useContext  } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import "../css/menu.css";
+import DishIcon from "../assets/icons/dish.svg";
 import Counter from "../components/Counter";
-import BasketIcon from "../assets/icons/basket.svg";
+import BasketBtn from "../components/BasketBtn";
 import { ArrowLeftDoubleIcon, ArrowRightDoubleIcon } from "hugeicons-react";
-import { BasketContext } from '../App';
+import { BasketContext } from "../App";
 interface Product {
   id: number;
   name: string;
@@ -17,15 +17,29 @@ interface props {
 }
 
 const Menu: React.FC<props> = ({ products }) => {
-  const basketContext  = useContext(BasketContext);
-  if(!basketContext){
+  const [leftIconShow, setLeftIconShow] = useState<boolean>(false);
+  const [rightIconShow, setRightIconShow] = useState<boolean>(false);
+  const tabBox = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const checkingTabBoxSize: () => void = () => {
+      if (tabBox.current!.clientWidth >= tabBox.current!.scrollWidth) {
+        setRightIconShow(false);
+      } else {
+        setRightIconShow(true);
+      }
+    };
+    checkingTabBoxSize();
+    window.addEventListener("resize", checkingTabBoxSize);
+    return () => {
+      window.removeEventListener("resize", checkingTabBoxSize);
+    };
+  }, []);
+  const basketContext = useContext(BasketContext);
+  if (!basketContext) {
     return;
   }
-  const {quantities,basketItems,addToQuantities,addToBasket} = basketContext;
-  
-  const [leftIconShow, setLeftIconShow] = useState<boolean>(false);
-  const [rightIconShow, setRightIconShow] = useState<boolean>(true);
-  const tabBox = useRef<HTMLDivElement>(null);
+
+  const { addToQuantities, addToBasket } = basketContext;
 
   const uniqueTypes: string[] = [
     ...new Set(products.map((product) => product.type)),
@@ -55,6 +69,7 @@ const Menu: React.FC<props> = ({ products }) => {
       setRightIconShow(true);
     }
   };
+
   const slideRight: () => void = () => {
     tabBox.current!.scrollLeft += 300;
   };
@@ -64,6 +79,13 @@ const Menu: React.FC<props> = ({ products }) => {
   };
   const tabScroll: () => void = () => {
     handleIcons();
+  };
+  const basketBtnClick: (id: number) => void = (id) => {
+    console.log(
+      products.filter((i) => {
+        return i.id == id;
+      })
+    );
   };
   return (
     <div className="flex-1 flex flex-col py-5  w-full ">
@@ -148,10 +170,8 @@ const Menu: React.FC<props> = ({ products }) => {
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <Counter id={p.id} quantities={quantities} addToQuantities={addToQuantities}/>
-                    <button className="bg-primaryColor h-fit rounded-full px-2 py-2 text-white shadow-md shadow-primaryColor">
-                      <img src={BasketIcon} className="w-5 h-5" />
-                    </button>
+                    <Counter id={p.id} addToQuantities={addToQuantities} />
+                    <BasketBtn basketBtnClick={basketBtnClick} id={p.id} />
                   </div>
                 </div>
               </div>

@@ -6,10 +6,8 @@ import React, { useState, createContext, useEffect } from "react";
 import UserImg from "./assets/images/user.jpg";
 import { Search01Icon } from "hugeicons-react";
 interface BasketContextType {
-  quantities: { [key: number]: number } | null;
-  basketItems: object[];
-  addToQuantities:(id:number,qty:number)=>void;
-  addToBasket:(id:number)=>void;
+  addToQuantities: (id: number, qty: number) => void;
+  addToBasket: (id: number) => void;
 }
 const BasketContext = createContext<BasketContextType | null>(null);
 const App: React.FC = () => {
@@ -23,22 +21,20 @@ const App: React.FC = () => {
     [key: number]: number;
   } | null>({});
   const [basketItems, setBasketItems] = useState<object[]>([]);
-  const addToQuantities:(id:number,qty:number) => void = (id,qty) =>{
-    setQuantities((prevQuantities)=>({
+  const addToQuantities: (id: number, qty: number) => void = (id, qty) => {
+    setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]:qty
-    }))
-  }
-  useEffect(()=>{
-    console.log(quantities);
-  },[quantities])
-  const addToBasket:(id:number) => void = (id) =>{
+      [id]: qty,
+    }));
+  };
+
+  const addToBasket: (id: number) => void = (id) => {
     console.log(id);
-  }
+  };
   return (
     <div className="min-h-screen min-w-screen bg-gray-100 flex ">
       <Sidebar toggleSideBar={toggleSideBar} sideBarExpand={sideBarExpand} />
-      <BasketContext.Provider value={{quantities,basketItems,addToQuantities,addToBasket}}>
+      <BasketContext.Provider value={{ addToQuantities, addToBasket }}>
         <div
           className={`flex-1 flex-col flex py-10 px-10 w-full overflow-hidden ${
             sideBarExpand ? "sideBarExpand" : "sidebarCollapse"

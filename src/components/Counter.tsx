@@ -1,19 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import { PlusSignIcon, MinusSignIcon } from "hugeicons-react";
-interface Props{
-  id:number,
-  quantities:{ [key: number]: number } | null;
-  addToQuantities:(id:number,qty:number)=>void;
+interface Props {
+  id: number;
+  addToQuantities: (id: number, qty: number) => void;
 }
-const Counter: React.FC<Props> = ({id,quantities,addToQuantities}) => {
+const Counter: React.FC<Props> = ({ id, addToQuantities }) => {
   const [number, setNumber] = useState<number>(1);
-  
 
-  useEffect(()=>{
-    addToQuantities(id,number);
-  },[number])
-  
-  
+  useEffect(() => {
+    addToQuantities(id, number);
+  }, [number]);
+
   const minus: () => void = () => {
     let currentNumber = number;
     if (currentNumber > 1) {
@@ -38,7 +35,7 @@ const Counter: React.FC<Props> = ({id,quantities,addToQuantities}) => {
       </div>
       <button
         type="button"
-        className="bg-white rounded-full px-1 py-1 shadow-md"
+        className="bg-white rounded-full px-1 py-1 shadow-md h"
         onClick={add}
       >
         <PlusSignIcon size={16} />

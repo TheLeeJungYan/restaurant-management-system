@@ -56,7 +56,7 @@ const Menu: React.FC<props> = ({ products }) => {
     const scrollValue: number = tabBox.current!.scrollLeft;
     const maxScrollWidth: number =
       tabBox.current!.scrollWidth - tabBox.current!.clientWidth;
-    console.log(tabBox.current!.clientWidth);
+
     if (scrollValue > 0) {
       setLeftIconShow(true);
     } else {
@@ -81,11 +81,7 @@ const Menu: React.FC<props> = ({ products }) => {
     handleIcons();
   };
   const basketBtnClick: (id: number) => void = (id) => {
-    console.log(
-      products.filter((i) => {
-        return i.id == id;
-      })
-    );
+    addToBasket(id);
   };
   return (
     <div className="flex-1 flex flex-col py-5  w-full ">

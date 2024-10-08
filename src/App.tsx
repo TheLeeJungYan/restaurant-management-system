@@ -9,6 +9,14 @@ interface BasketContextType {
   addToQuantities: (id: number, qty: number) => void;
   addToBasket: (id: number) => void;
 }
+
+interface Product {
+  id: number;
+  name: string;
+  img: string;
+  price: number;
+  type: string;
+}
 const BasketContext = createContext<BasketContextType | null>(null);
 const App: React.FC = () => {
   const [sideBarExpand, setSideBarExpand] = useState<boolean>(false);
@@ -29,8 +37,22 @@ const App: React.FC = () => {
   };
 
   const addToBasket: (id: number) => void = (id) => {
-    console.log(id);
+    const currentPro: Product | undefined = products.find((i) => i.id === id);
+
+    if (currentPro) {
+      console.log(quantities![currentPro.id]);
+      // setBasketItems((prevItems) => [
+      //   ...prevItems,
+      //   {
+      //     id: id,
+      //     name: currentPro.name,
+      //     price: currentPro.price,
+      //   },
+      // ]);
+    }
   };
+
+  useEffect(() => {}, [basketItems]);
   return (
     <div className="min-h-screen min-w-screen bg-gray-100 flex ">
       <Sidebar toggleSideBar={toggleSideBar} sideBarExpand={sideBarExpand} />

@@ -14,10 +14,10 @@ import {
   Settings03Icon,
   UserListIcon,
 } from "hugeicons-react";
-
+import { Link } from "react-router-dom";
 interface Props {
   sideBarExpand: boolean;
-  toggleSideBar: () => void;
+  toggleSideBar: (toggle:boolean) => void;
 }
 const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
   return (
@@ -25,6 +25,8 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
       className={`bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${
         sideBarExpand ? "w-72" : "w-22 "
       }`}
+      onMouseEnter={()=>toggleSideBar(true)}
+      onMouseLeave={()=>toggleSideBar(false)}
     >
       <div
         className="flex flex-col flex-1 overflow-y-hidden overflow-x-hidden"
@@ -53,8 +55,8 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
             id="default"
             className=" flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-8  border-gray-150 border-b pb-3"
           >
-            <a
-              href="#"
+            <Link
+              to="/"
               className=" bg-primaryColor text-white hover:bg-primaryColor hover:text-white"
             >
               <div>
@@ -62,9 +64,9 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
               </div>
 
               <span>Ordering Process</span>
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/transactions"
               className=" text-gray-400 hover:bg-primaryColor hover:text-white"
             >
               <div>
@@ -72,7 +74,7 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
               </div>
 
               <span>Transactions</span>
-            </a>
+            </Link>
 
             <a
               href="#"
@@ -157,16 +159,7 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
             </div>
           </div>
         </div>
-        <div className="px-4 py-8 flex flex-col items-end gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-2 *:font-semibold *:font-poppins mt-auto">
-          <button className="border text-gray-500" onClick={toggleSideBar}>
-            <ArrowLeft03Icon
-              size={24}
-              className={`transition-transform duration-500 ${
-                sideBarExpand ? "rotate-0" : "rotate-180"
-              }`}
-            />
-          </button>
-        </div>
+      
       </div>
     </nav>
   );

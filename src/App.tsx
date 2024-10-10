@@ -21,8 +21,8 @@ const BasketContext = createContext<BasketContextType | null>(null);
 const App: React.FC = () => {
   const [sideBarExpand, setSideBarExpand] = useState<boolean>(false);
 
-  const toggleSideBar: () => void = () => {
-    setSideBarExpand(!sideBarExpand);
+  const toggleSideBar: (toggle:boolean) => void = (toggle) => {
+    setSideBarExpand(toggle);
   };
 
   const [quantities, setQuantities] = useState<{
@@ -57,10 +57,9 @@ const App: React.FC = () => {
     <div className="min-h-screen min-w-screen bg-gray-100 flex ">
       <Sidebar toggleSideBar={toggleSideBar} sideBarExpand={sideBarExpand} />
       <BasketContext.Provider value={{ addToQuantities, addToBasket }}>
+        <div className={`fixed top-0 left-0 bg-black/40 w-full h-full z-40 ${sideBarExpand?'block':'hidden'}`} id="overlay"></div>
         <div
-          className={`flex-1 flex-col flex py-10 px-10 w-full overflow-hidden ${
-            sideBarExpand ? "sideBarExpand" : "sidebarCollapse"
-          }`}
+          className={`flex-1 flex-col flex py-10 px-10 w-full overflow-hidden content`}
         >
           <header className="flex items-center">
             <label

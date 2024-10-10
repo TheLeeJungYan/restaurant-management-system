@@ -92,7 +92,7 @@ const Menu: React.FC<props> = ({ products }) => {
       <div id="cat" className="flex mt-2 w-full items-center  relative">
         <div className={`icon ${leftIconShow ? "flex" : "hidden"}`}>
           <div
-            className="iconWrapper bg-white rounded-full px-2 py-2 text-gray-700 border border-gray-400 cursor-pointer ml-2"
+            className="iconWrapper bg-white rounded-full px-2 py-2 bg-white shadow-lg text-gray-500 cursor-pointer ml-2"
             onClick={slideLeft}
           >
             <ArrowLeftDoubleIcon size={20} />
@@ -134,7 +134,7 @@ const Menu: React.FC<props> = ({ products }) => {
         </div>
         <div className={`icon ${rightIconShow ? "flex" : "hidden"}`}>
           <div
-            className="iconWrapper bg-white rounded-full px-2 py-2 text-gray-700 border border-gray-400 cursor-pointer mr-2"
+            className="iconWrapper  rounded-full px-2 py-2 bg-white shadow-lg text-gray-500 border cursor-pointer mr-2"
             onClick={slideRight}
           >
             <ArrowRightDoubleIcon size={20} />

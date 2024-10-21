@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 interface Props {
   sideBarExpand: boolean;
-  toggleSideBar: (toggle:boolean) => void;
+  toggleSideBar: (toggle: boolean) => void;
 }
 const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
   return (
@@ -25,8 +25,8 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
       className={`bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${
         sideBarExpand ? "w-72" : "w-22 "
       }`}
-      onMouseEnter={()=>toggleSideBar(true)}
-      onMouseLeave={()=>toggleSideBar(false)}
+      onMouseEnter={() => toggleSideBar(true)}
+      onMouseLeave={() => toggleSideBar(false)}
     >
       <div
         className="flex flex-col flex-1 overflow-y-hidden overflow-x-hidden"
@@ -106,16 +106,16 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
               )}
             </span>
             <div className="flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:text-sm *:gap-8 border-gray-150">
-              <a
-                href="#"
+              <Link
+                to="/products"
                 className="text-gray-400 hover:bg-primaryColor hover:text-white"
               >
                 <div>
                   <Dish01Icon size={24} />
                 </div>
 
-                <span>Dish Management</span>
-              </a>
+                <span>Products Management</span>
+              </Link>
               <a
                 href="#"
                 className="text-gray-400 hover:bg-primaryColor hover:text-white"
@@ -159,7 +159,6 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
             </div>
           </div>
         </div>
-      
       </div>
     </nav>
   );

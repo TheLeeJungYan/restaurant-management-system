@@ -1,6 +1,7 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import products from "./data/product";
+import Basket from "./components/Basket";
 import Menu from "./components/Menu";
 import React, { useState, createContext, useEffect } from "react";
 import UserImg from "./assets/images/user.jpg";
@@ -21,7 +22,7 @@ const BasketContext = createContext<BasketContextType | null>(null);
 const App: React.FC = () => {
   const [sideBarExpand, setSideBarExpand] = useState<boolean>(false);
 
-  const toggleSideBar: (toggle:boolean) => void = (toggle) => {
+  const toggleSideBar: (toggle: boolean) => void = (toggle) => {
     setSideBarExpand(toggle);
   };
 
@@ -57,9 +58,14 @@ const App: React.FC = () => {
     <div className="min-h-screen min-w-screen bg-gray-100 flex ">
       <Sidebar toggleSideBar={toggleSideBar} sideBarExpand={sideBarExpand} />
       <BasketContext.Provider value={{ addToQuantities, addToBasket }}>
-        <div className={`fixed top-0 left-0 bg-black/40 w-full h-full z-40 ${sideBarExpand?'block':'hidden'}`} id="overlay"></div>
         <div
-          className={`flex-1 flex-col flex py-10 px-10 w-full overflow-hidden content`}
+          className={`fixed top-0 left-0 bg-black/40 w-full h-full z-40 ${
+            sideBarExpand ? "block" : "hidden"
+          }`}
+          id="overlay"
+        ></div>
+        <div
+          className={`flex-1 flex-col flex py-10 px-5 w-full overflow-hidden content`}
         >
           <header className="flex items-center">
             <label
@@ -85,7 +91,10 @@ const App: React.FC = () => {
               />
             </div>
           </header>
-          <Menu products={products} />
+          <div className="flex">
+            <Menu products={products} />
+            <Basket />
+          </div>
         </div>
       </BasketContext.Provider>
     </div>

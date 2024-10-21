@@ -6,13 +6,14 @@ export default {
       fontFamily: {
         poppins: ["poppins"],
         inter: ["inter"],
-        nunito:["Nunito"]
+        nunito: ["Nunito"],
       },
       colors: {
         primaryColor: "#AE2B00",
       },
       width: {
         22: "5.5rem",
+        112: "28rem",
       },
     },
   },

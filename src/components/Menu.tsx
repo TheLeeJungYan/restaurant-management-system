@@ -84,7 +84,7 @@ const Menu: React.FC<props> = ({ products }) => {
     addToBasket(id);
   };
   return (
-    <div className="flex-1 flex flex-col py-5  w-full ">
+    <div className="flex-1 flex flex-col py-5  w-full overflow-x-hidden">
       <span className="font-nunito font-black text-gray-700 uppercase text-3xl px-3">
         menu
       </span>
@@ -144,7 +144,7 @@ const Menu: React.FC<props> = ({ products }) => {
       <div id="productCont" className="flex flex-row flex-wrap px-3 mt-2 ">
         {products.map((p, index) => {
           return (
-            <div key={index} className="basis-1/4 px-2 py-2 shrink-0">
+            <div key={index} className="basis-1/3 px-2 py-2 shrink-0">
               <div className="product bg-white flex flex-col overflow-hidden rounded-xl border cursor-pointer hover:shadow-lg h-full transition-all duration-500">
                 <div className="overflow-hidden">
                   <img

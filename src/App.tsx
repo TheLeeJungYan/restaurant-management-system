@@ -6,22 +6,24 @@ import Menu from "./components/Menu";
 import React, { useState, createContext, useEffect } from "react";
 import UserImg from "./assets/images/user.jpg";
 import { Search01Icon } from "hugeicons-react";
+import axios from "axios";
+import { BASE_URL } from "./config";
 interface BasketContextType {
   addToQuantities: (id: number, qty: number) => void;
   addToBasket: (id: number) => void;
 }
 
 interface Product {
-  id: number;
-  name: string;
-  img: string;
+  ID: number;
+  NAME: string;
+  TYPE: string;
   price: number;
   type: string;
 }
 const BasketContext = createContext<BasketContextType | null>(null);
 const App: React.FC = () => {
   const [sideBarExpand, setSideBarExpand] = useState<boolean>(false);
-
+  const products = useRef<Product[]>([]);
   const toggleSideBar: (toggle: boolean) => void = (toggle) => {
     setSideBarExpand(toggle);
   };
@@ -52,7 +54,13 @@ const App: React.FC = () => {
       // ]);
     }
   };
-
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await axios.get(`${BASE_URL}/products`);
+      console.log(res.data);
+    };
+    fetchProducts();
+  }, []);
   useEffect(() => {}, [basketItems]);
   return (
     <div className="min-h-screen min-w-screen bg-gray-100 flex ">
@@ -92,8 +100,8 @@ const App: React.FC = () => {
             </div>
           </header>
           <div className="flex">
-            <Menu products={products} />
-            <Basket />
+            {/* <Menu products={products} />
+            <Basket /> */}
           </div>
         </div>
       </BasketContext.Provider>

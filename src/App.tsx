@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar";
 import products from "./data/product";
 import Basket from "./components/Basket";
 import Menu from "./components/Menu";
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useRef } from "react";
 import UserImg from "./assets/images/user.jpg";
 import { Search01Icon } from "hugeicons-react";
 import axios from "axios";
@@ -54,6 +54,8 @@ const App: React.FC = () => {
       // ]);
     }
   };
+
+  
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await axios.get(`${BASE_URL}/products`);

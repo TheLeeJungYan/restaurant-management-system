@@ -1,5 +1,5 @@
 import Icon from "../assets/images/icon.png";
-import React from "react";
+import React, { useContext } from "react";
 import "../css/sidebar.css";
 import {
   ShoppingBag01Icon,
@@ -15,28 +15,28 @@ import {
   UserListIcon,
 } from "hugeicons-react";
 import { Link } from "react-router-dom";
-interface Props {
-  sideBarExpand: boolean;
-  toggleSideBar: (toggle: boolean) => void;
-}
-const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
+import { AuthContext } from "../context/AuthContext";
+const SideBar: React.FC = () => {
+  const authContext = useContext(AuthContext);
+  if (authContext === undefined) {
+    return <div>Loading...</div>;
+  }
+  const {sideBarExpand,toggleSideBar} = authContext;
   return (
+    
     <nav
-      className={`bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${
-        sideBarExpand ? "w-72" : "w-22 "
-      }`}
+      className={`bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${sideBarExpand ? "w-72" : "w-22"}`}
       onMouseEnter={() => toggleSideBar(true)}
       onMouseLeave={() => toggleSideBar(false)}
     >
+      
       <div
         className="flex flex-col flex-1 overflow-y-hidden overflow-x-hidden"
         id="sidebarCont"
       >
         <div className="px-5 flex items-center gap-4 py-7 ">
           <div
-            className={`h-12 rounded-2xl flex items-center justify-center px-2 bg-gray-100 shadow-md  shadow-gray-100/50 shrink-0 transition-all  ${
-              sideBarExpand ? "w-20" : "w-14 "
-            }`}
+            className={`h-12 rounded-2xl flex items-center justify-center px-2 bg-gray-100 shadow-md  shadow-gray-100/50 shrink-0 transition-all  ${sideBarExpand ? "w-20" : "w-14 "}`}
           >
             <img src={Icon} alt="" />
           </div>
@@ -99,11 +99,9 @@ const SideBar: React.FC<Props> = ({ sideBarExpand, toggleSideBar }) => {
           </div>
           <div id="maintenance" className=" flex flex-col pt-3">
             <span className="uppercase ml-3 py-3 text-gray-400 text-sm">
-              {sideBarExpand ? (
-                "Maintenance"
-              ) : (
+             
                 <Settings03Icon size={20} className="settingIcon" />
-              )}
+              
             </span>
             <div className="flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:text-sm *:gap-8 border-gray-150">
               <Link

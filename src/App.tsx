@@ -1,18 +1,8 @@
 import "./App.css";
-import Sidebar from "./components/Sidebar";
-import products from "./data/product";
-import Basket from "./components/Basket";
-import Menu from "./components/Menu";
 import React, { useState, createContext, useEffect, useRef } from "react";
-import UserImg from "./assets/images/user.jpg";
+import AuthLayout from "./layouts/AuthLayout";
 import { Search01Icon } from "hugeicons-react";
-import axios from "axios";
-import { BASE_URL } from "./config";
-interface BasketContextType {
-  addToQuantities: (id: number, qty: number) => void;
-  addToBasket: (id: number) => void;
-}
-
+import UserImg from "./assets/images/user.jpg";
 interface Product {
   ID: number;
   NAME: string;
@@ -20,65 +10,12 @@ interface Product {
   price: number;
   type: string;
 }
-const BasketContext = createContext<BasketContextType | null>(null);
+
 const App: React.FC = () => {
-  const [sideBarExpand, setSideBarExpand] = useState<boolean>(false);
-  const products = useRef<Product[]>([]);
-  const toggleSideBar: (toggle: boolean) => void = (toggle) => {
-    setSideBarExpand(toggle);
-  };
-
-  const [quantities, setQuantities] = useState<{
-    [key: number]: number;
-  } | null>({});
-  const [basketItems, setBasketItems] = useState<object[]>([]);
-  const addToQuantities: (id: number, qty: number) => void = (id, qty) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: qty,
-    }));
-  };
-
-  const addToBasket: (id: number) => void = (id) => {
-    const currentPro: Product | undefined = products.find((i) => i.id === id);
-
-    if (currentPro) {
-      console.log(quantities![currentPro.id]);
-      // setBasketItems((prevItems) => [
-      //   ...prevItems,
-      //   {
-      //     id: id,
-      //     name: currentPro.name,
-      //     price: currentPro.price,
-      //   },
-      // ]);
-    }
-  };
-
-  
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await axios.get(`${BASE_URL}/products`);
-      console.log(res.data);
-    };
-    fetchProducts();
-  }, []);
-  useEffect(() => {}, [basketItems]);
-  return (
-    <div className="min-h-screen min-w-screen bg-gray-100 flex ">
-      <Sidebar toggleSideBar={toggleSideBar} sideBarExpand={sideBarExpand} />
-      <BasketContext.Provider value={{ addToQuantities, addToBasket }}>
-        <div
-          className={`fixed top-0 left-0 bg-black/40 w-full h-full z-40 ${
-            sideBarExpand ? "block" : "hidden"
-          }`}
-          id="overlay"
-        ></div>
-        <div
-          className={`flex-1 flex-col flex py-10 px-5 w-full overflow-hidden content`}
-        >
+    return (
+      <AuthLayout>
           <header className="flex items-center">
-            <label
+           <label
               id="search"
               className="border flex items-center bg-white rounded-full overflow-hidden py-2.5 px-4 gap-2 font-poppins min-w-96"
             >
@@ -102,13 +39,10 @@ const App: React.FC = () => {
             </div>
           </header>
           <div className="flex">
-            {/* <Menu products={products} />
-            <Basket /> */}
+            
           </div>
-        </div>
-      </BasketContext.Provider>
-    </div>
-  );
+     </AuthLayout>
+    )
 };
 
-export { App, BasketContext };
+export { App };

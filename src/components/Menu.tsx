@@ -43,6 +43,7 @@ const Menu: React.FC = () => {
 
   const slideLeft: () => void = () => {
     tabBox.current!.scrollLeft -= 300;
+   
   };
   const tabBoxScroll: () => void = () =>{
     handleIcons();

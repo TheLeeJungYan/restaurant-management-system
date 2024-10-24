@@ -1,5 +1,5 @@
 .icon {
-  top: 0;
+  top: 0px;
   position: absolute;
   height: 100%;
 
@@ -19,7 +19,7 @@
 }
 
 #tabBox {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 .price {

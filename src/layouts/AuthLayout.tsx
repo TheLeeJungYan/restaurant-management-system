@@ -2,6 +2,7 @@ import React from "react";
 import SideBar from "../components/Sidebar";
 import AuthProvider from "../context/AuthContext";
 import Overlay from "../components/Overlay";
+import '../css/authLayout.css'
 const AuthLayout: React.FC<{children: React.ReactNode}> = ({children}) => {
    
     return (
@@ -9,10 +10,10 @@ const AuthLayout: React.FC<{children: React.ReactNode}> = ({children}) => {
             <div className="min-h-screen min-w-screen bg-gray-100 flex ">
             <SideBar />
             <Overlay />
-            <div className={`flex-1 flex-col flex py-10 px-5 w-full overflow-hidden content`} >   
+            <div className={`flex-1 flex-col flex py-10 px-5 content`} >   
                 {children}
-                </div>
             </div>  
+            </div>
         </AuthProvider>
     );
 };

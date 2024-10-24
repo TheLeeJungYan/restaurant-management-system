@@ -1,169 +1,169 @@
 interface Product {
-  id: number;
-  name: string;
-  img: string;
-  price: number;
-  type: string;
+  ID: number;
+  NAME: string;
+  IMG: string;
+  PRICE: number;
+  CATEGORY: string;
 }
 
 const products: Product[] = [
-  // Appetizers
-  { id: 1, name: "Garlic Bread", img: "temp", price: 5, type: "appetizer" },
-  { id: 2, name: "Caesar Salad", img: "temp", price: 8, type: "appetizer" },
+  { ID: 1, NAME: "Garlic Bread", IMG: "temp", PRICE: 5, CATEGORY: "appetizer" },
+  { ID: 2, NAME: "Caesar Salad", IMG: "temp", PRICE: 8, CATEGORY: "appetizer" },
   {
-    id: 3,
-    name: "French Onion Soup",
-    img: "temp",
-    price: 7,
-    type: "appetizer",
+    ID: 3,
+    NAME: "French Onion Soup",
+    IMG: "temp",
+    PRICE: 7,
+    CATEGORY: "appetizer",
   },
   {
-    id: 4,
-    name: "Mozzarella Sticks",
-    img: "temp",
-    price: 6,
-    type: "appetizer",
+    ID: 4,
+    NAME: "Mozzarella Sticks",
+    IMG: "temp",
+    PRICE: 6,
+    CATEGORY: "appetizer",
   },
-  { id: 5, name: "Buffalo Wings", img: "temp", price: 9, type: "appetizer" },
+  { ID: 5, NAME: "Buffalo Wings", IMG: "temp", PRICE: 9, CATEGORY: "appetizer" },
 
   // Main Courses
-  { id: 6, name: "Grilled Ribeye Steak", img: "temp", price: 28, type: "main" },
-  { id: 7, name: "BBQ Baby Back Ribs", img: "temp", price: 25, type: "main" },
+  { ID: 6, NAME: "Grilled Ribeye Steak", IMG: "temp", PRICE: 28, CATEGORY: "main" },
+  { ID: 7, NAME: "BBQ Baby Back Ribs", IMG: "temp", PRICE: 25, CATEGORY: "main" },
   {
-    id: 8,
-    name: "Chicken Alfredo Pasta",
-    img: "temp",
-    price: 18,
-    type: "main",
+    ID: 8,
+    NAME: "Chicken Alfredo Pasta",
+    IMG: "temp",
+    PRICE: 18,
+    CATEGORY: "main",
   },
-  { id: 9, name: "Classic Cheeseburger", img: "temp", price: 15, type: "main" },
-  { id: 10, name: "Fish and Chips", img: "temp", price: 14, type: "main" },
-  { id: 11, name: "Margherita Pizza", img: "temp", price: 12, type: "main" },
-  { id: 12, name: "Spaghetti Carbonara", img: "temp", price: 16, type: "main" },
-  { id: 13, name: "Pan-Seared Salmon", img: "temp", price: 22, type: "main" },
+  { ID: 9, NAME: "Classic Cheeseburger", IMG: "temp", PRICE: 15, CATEGORY: "main" },
+  { ID: 10, NAME: "Fish and Chips", IMG: "temp", PRICE: 14, CATEGORY: "main" },
+  { ID: 11, NAME: "Margherita Pizza", IMG: "temp", PRICE: 12, CATEGORY: "main" },
+  { ID: 12, NAME: "Spaghetti Carbonara", IMG: "temp", PRICE: 16, CATEGORY: "main" },
+  { ID: 13, NAME: "Pan-Seared Salmon", IMG: "temp", PRICE: 22, CATEGORY: "main" },
   {
-    id: 14,
-    name: "Grilled Chicken Caesar Wrap",
-    img: "temp",
-    price: 12,
-    type: "main",
+    ID: 14,
+    NAME: "Grilled Chicken Caesar Wrap",
+    IMG: "temp",
+    PRICE: 12,
+    CATEGORY: "main",
   },
-  { id: 15, name: "Lamb Chops", img: "temp", price: 30, type: "main" },
+  { ID: 15, NAME: "Lamb Chops", IMG: "temp", PRICE: 30, CATEGORY: "main" },
 
   // Sides
-  { id: 16, name: "Mashed Potatoes", img: "temp", price: 5, type: "side" },
-  { id: 17, name: "Steamed Vegetables", img: "temp", price: 4, type: "side" },
-  { id: 18, name: "French Fries", img: "temp", price: 3, type: "side" },
-  { id: 19, name: "Coleslaw", img: "temp", price: 3, type: "side" },
-  { id: 20, name: "Garlic Rice", img: "temp", price: 4, type: "side" },
+  { ID: 16, NAME: "Mashed Potatoes", IMG: "temp", PRICE: 5, CATEGORY: "side" },
+  { ID: 17, NAME: "Steamed Vegetables", IMG: "temp", PRICE: 4, CATEGORY: "side" },
+  { ID: 18, NAME: "French Fries", IMG: "temp", PRICE: 3, CATEGORY: "side" },
+  { ID: 19, NAME: "Coleslaw", IMG: "temp", PRICE: 3, CATEGORY: "side" },
+  { ID: 20, NAME: "Garlic Rice", IMG: "temp", PRICE: 4, CATEGORY: "side" },
 
   // Desserts
   {
-    id: 21,
-    name: "Chocolate Lava Cake",
-    img: "temp",
-    price: 7,
-    type: "dessert",
+    ID: 21,
+    NAME: "Chocolate Lava Cake",
+    IMG: "temp",
+    PRICE: 7,
+    CATEGORY: "dessert",
   },
-  { id: 22, name: "Tiramisu", img: "temp", price: 8, type: "dessert" },
+  { ID: 22, NAME: "Tiramisu", IMG: "temp", PRICE: 8, CATEGORY: "dessert" },
   {
-    id: 23,
-    name: "New York Cheesecake",
-    img: "temp",
-    price: 8,
-    type: "dessert",
+    ID: 23,
+    NAME: "New York Cheesecake",
+    IMG: "temp",
+    PRICE: 8,
+    CATEGORY: "dessert",
   },
-  { id: 24, name: "Apple Pie", img: "temp", price: 6, type: "dessert" },
-  { id: 25, name: "Ice Cream Sundae", img: "temp", price: 5, type: "dessert" },
-  { id: 26, name: "Crème Brûlée", img: "temp", price: 9, type: "dessert" },
-  { id: 27, name: "Pecan Pie", img: "temp", price: 7, type: "dessert" },
+  { ID: 24, NAME: "Apple Pie", IMG: "temp", PRICE: 6, CATEGORY: "dessert" },
+  { ID: 25, NAME: "Ice Cream Sundae", IMG: "temp", PRICE: 5, CATEGORY: "dessert" },
+  { ID: 26, NAME: "Crème Brûlée", IMG: "temp", PRICE: 9, CATEGORY: "dessert" },
+  { ID: 27, NAME: "Pecan Pie", IMG: "temp", PRICE: 7, CATEGORY: "dessert" },
 
   // Beverages
-  { id: 28, name: "Coca-Cola", img: "temp", price: 3, type: "beverage" },
+  { ID: 28, NAME: "Coca-Cola", IMG: "temp", PRICE: 3, CATEGORY: "beverage" },
   {
-    id: 29,
-    name: "Fresh Orange Juice",
-    img: "temp",
-    price: 4,
-    type: "beverage",
+    ID: 29,
+    NAME: "Fresh Orange Juice",
+    IMG: "temp",
+    PRICE: 4,
+    CATEGORY: "beverage",
   },
-  { id: 30, name: "Lemonade", img: "temp", price: 3, type: "beverage" },
-  { id: 31, name: "Iced Tea", img: "temp", price: 3, type: "beverage" },
-  { id: 32, name: "Espresso", img: "temp", price: 4, type: "beverage" },
-  { id: 33, name: "Cappuccino", img: "temp", price: 5, type: "beverage" },
-  { id: 34, name: "Red Wine", img: "temp", price: 8, type: "beverage" },
-  { id: 35, name: "White Wine", img: "temp", price: 8, type: "beverage" },
-  { id: 36, name: "Draft Beer", img: "temp", price: 6, type: "beverage" },
+  { ID: 30, NAME: "Lemonade", IMG: "temp", PRICE: 3, CATEGORY: "beverage" },
+  { ID: 31, NAME: "Iced Tea", IMG: "temp", PRICE: 3, CATEGORY: "beverage" },
+  { ID: 32, NAME: "Espresso", IMG: "temp", PRICE: 4, CATEGORY: "beverage" },
+  { ID: 33, NAME: "Cappuccino", IMG: "temp", PRICE: 5, CATEGORY: "beverage" },
+  { ID: 34, NAME: "Red Wine", IMG: "temp", PRICE: 8, CATEGORY: "beverage" },
+  { ID: 35, NAME: "White Wine", IMG: "temp", PRICE: 8, CATEGORY: "beverage" },
+  { ID: 36, NAME: "Draft Beer", IMG: "temp", PRICE: 6, CATEGORY: "beverage" },
 
   // Salads
-  { id: 37, name: "Greek Salad", img: "temp", price: 8, type: "salad" },
-  { id: 38, name: "Caprese Salad", img: "temp", price: 9, type: "salad" },
-  { id: 39, name: "Waldorf Salad", img: "temp", price: 10, type: "salad" },
+  { ID: 37, NAME: "Greek Salad", IMG: "temp", PRICE: 8, CATEGORY: "salad" },
+  { ID: 38, NAME: "Caprese Salad", IMG: "temp", PRICE: 9, CATEGORY: "salad" },
+  { ID: 39, NAME: "Waldorf Salad", IMG: "temp", PRICE: 10, CATEGORY: "salad" },
 
   // Sandwiches
-  { id: 40, name: "Club Sandwich", img: "temp", price: 12, type: "sandwich" },
-  { id: 41, name: "BLT Sandwich", img: "temp", price: 10, type: "sandwich" },
+  { ID: 40, NAME: "Club Sandwich", IMG: "temp", PRICE: 12, CATEGORY: "sandwich" },
+  { ID: 41, NAME: "BLT Sandwich", IMG: "temp", PRICE: 10, CATEGORY: "sandwich" },
   {
-    id: 42,
-    name: "Philly Cheesesteak",
-    img: "temp",
-    price: 14,
-    type: "sandwich",
+    ID: 42,
+    NAME: "Philly Cheesesteak",
+    IMG: "temp",
+    PRICE: 14,
+    CATEGORY: "sandwich",
   },
   {
-    id: 43,
-    name: "Grilled Cheese Sandwich",
-    img: "temp",
-    price: 8,
-    type: "sandwich",
+    ID: 43,
+    NAME: "Grilled Cheese Sandwich",
+    IMG: "temp",
+    PRICE: 8,
+    CATEGORY: "sandwich",
   },
 
   // Seafood
   {
-    id: 44,
-    name: "Grilled Shrimp Skewers",
-    img: "temp",
-    price: 20,
-    type: "seafood",
+    ID: 44,
+    NAME: "Grilled Shrimp Skewers",
+    IMG: "temp",
+    PRICE: 20,
+    CATEGORY: "seafood",
   },
-  { id: 45, name: "Crab Cakes", img: "temp", price: 18, type: "seafood" },
-  { id: 46, name: "Lobster Roll", img: "temp", price: 24, type: "seafood" },
+  { ID: 45, NAME: "Crab Cakes", IMG: "temp", PRICE: 18, CATEGORY: "seafood" },
+  { ID: 46, NAME: "Lobster Roll", IMG: "temp", PRICE: 24, CATEGORY: "seafood" },
 
   // Pizza
-  { id: 47, name: "Pepperoni Pizza", img: "temp", price: 12, type: "pizza" },
-  { id: 48, name: "Hawaiian Pizza", img: "temp", price: 13, type: "pizza" },
-  { id: 49, name: "BBQ Chicken Pizza", img: "temp", price: 14, type: "pizza" },
+  { ID: 47, NAME: "Pepperoni Pizza", IMG: "temp", PRICE: 12, CATEGORY: "pizza" },
+  { ID: 48, NAME: "Hawaiian Pizza", IMG: "temp", PRICE: 13, CATEGORY: "pizza" },
+  { ID: 49, NAME: "BBQ Chicken Pizza", IMG: "temp", PRICE: 14, CATEGORY: "pizza" },
 
   // Pasta
-  { id: 50, name: "Lasagna", img: "temp", price: 18, type: "pasta" },
-  { id: 51, name: "Penne Arrabbiata", img: "temp", price: 14, type: "pasta" },
-  { id: 52, name: "Fettuccine Alfredo", img: "temp", price: 16, type: "pasta" },
+  { ID: 50, NAME: "Lasagna", IMG: "temp", PRICE: 18, CATEGORY: "pasta" },
+  { ID: 51, NAME: "Penne Arrabbiata", IMG: "temp", PRICE: 14, CATEGORY: "pasta" },
+  { ID: 52, NAME: "Fettuccine Alfredo", IMG: "temp", PRICE: 16, CATEGORY: "pasta" },
 
   // Breakfast
-  { id: 53, name: "Pancakes", img: "temp", price: 10, type: "breakfast" },
-  { id: 54, name: "Omelette", img: "temp", price: 12, type: "breakfast" },
-  { id: 55, name: "French Toast", img: "temp", price: 11, type: "breakfast" },
+  { ID: 53, NAME: "Pancakes", IMG: "temp", PRICE: 10, CATEGORY: "breakfast" },
+  { ID: 54, NAME: "Omelette", IMG: "temp", PRICE: 12, CATEGORY: "breakfast" },
+  { ID: 55, NAME: "French Toast", IMG: "temp", PRICE: 11, CATEGORY: "breakfast" },
 
   // Burgers
   {
-    id: 56,
-    name: "Bacon Cheeseburger",
-    img: "temp",
-    price: 16,
-    type: "burger",
+    ID: 56,
+    NAME: "Bacon Cheeseburger",
+    IMG: "temp",
+    PRICE: 16,
+    CATEGORY: "burger",
   },
-  { id: 57, name: "Veggie Burger", img: "temp", price: 14, type: "burger" },
+  { ID: 57, NAME: "Veggie Burger", IMG: "temp", PRICE: 14, CATEGORY: "burger" },
   {
-    id: 58,
-    name: "Mushroom Swiss Burger",
-    img: "temp",
-    price: 17,
-    type: "burger",
+    ID: 58,
+    NAME: "Mushroom Swiss Burger",
+    IMG: "temp",
+    PRICE: 17,
+    CATEGORY: "burger",
   },
 
   // Drinks (Alcoholic)
-  { id: 59, name: "Whiskey Sour", img: "temp", price: 10, type: "drink" },
-  { id: 60, name: "Margarita", img: "temp", price: 12, type: "drink" },
+  { ID: 59, NAME: "Whiskey Sour", IMG: "temp", PRICE: 10, CATEGORY: "drink" },
+  { ID: 60, NAME: "Margarita", IMG: "temp", PRICE: 12, CATEGORY: "drink" }
 ];
+
 
 export default products;

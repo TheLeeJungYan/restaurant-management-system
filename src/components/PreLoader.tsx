@@ -1,13 +1,10 @@
 import "../css/preloader.css";
 import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(useGSAP);
 const PreLoader: React.FC = () => {
   return (
     <div className="z-50 fixed top-0 right-0 w-full h-full bg-gray-200 flex items-center justify-center">
-      <svg
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         width="450"
@@ -21,7 +18,7 @@ const PreLoader: React.FC = () => {
           stroke="currentColor"
           stroke-width="1"
           stroke-linejoin="round"
-          stroke-dashoffset="200"
+      
         />
         <path
           d="M10 19.5H14"
@@ -57,7 +54,7 @@ const PreLoader: React.FC = () => {
           stroke-linecap="round"
           stroke-linejoin="round"
         />
-      </svg>
+      </svg> */}
     </div>
   );
 };

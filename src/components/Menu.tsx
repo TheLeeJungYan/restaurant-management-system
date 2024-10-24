@@ -1,10 +1,10 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
-import "../css/menu.css";
+import React, { useRef, useState, useContext, useEffect, useCallback } from "react";
 import DishIcon from "../assets/icons/dish.svg";
 import Counter from "../components/Counter";
 import BasketBtn from "../components/BasketBtn";
 import { ProductContext } from "../context/ProductContext";
 import { ArrowLeftDoubleIcon, ArrowRightDoubleIcon } from "hugeicons-react";
+import '../css/menu.css'
 interface Product {
   ID: number;
   NAME: string;
@@ -35,6 +35,7 @@ const Menu: React.FC = () => {
   if (productContext === undefined) {
     return <div>Loading...</div>;
   }
+
   const { products, uniqueTypes, getImageUrl } = productContext;
   const slideRight: () => void = () => {
     tabBox.current!.scrollLeft += 300;
@@ -43,15 +44,18 @@ const Menu: React.FC = () => {
   const slideLeft: () => void = () => {
     tabBox.current!.scrollLeft -= 300;
   };
-  const tabScroll: () => void = () => {
+  const tabBoxScroll: () => void = () =>{
     handleIcons();
-  };
+  }
+
+ 
   const handleIcons: () => void = () => {
     const tempScrollValue: number = tabBox.current!.scrollLeft;
     const scrollValue: number = Math.round(tempScrollValue);
     const maxScrollWidth: number =
       tabBox.current!.scrollWidth - tabBox.current!.clientWidth;
-
+    console.log({scrollValue,maxScrollWidth});
+    
     if (scrollValue > 0) {
       setLeftIconShow(true);
     } else {
@@ -64,12 +68,13 @@ const Menu: React.FC = () => {
       setRightIconShow(true);
     }
   };
+ 
   return (
-    <div className="flex-1 flex flex-col py-5  w-full overflow-x-hidden">
+    <div className="flex-1 flex flex-col py-5 ">
       <span className="font-nunito font-black text-gray-700 uppercase text-3xl px-3">
         menu
       </span>
-
+   
       <div id="cat" className="flex mt-2 w-full items-center  relative">
         <div className={`icon ${leftIconShow ? "flex" : "hidden"}`}>
           <div
@@ -83,7 +88,7 @@ const Menu: React.FC = () => {
           ref={tabBox}
           id="tabBox"
           className="flex items-center overflow-x-hidden gap-2 px-3 py-3"
-          onScroll={tabScroll}
+          onScroll={tabBoxScroll}
         >
           <div
             className="capitalize font-poppins font-semibold w-fit shrink-0

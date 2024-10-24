@@ -1,4 +1,4 @@
-import "../css/order.css";
+
 import React from "react";
 import AuthLayout from "../layouts/AuthLayout";
 import { Search01Icon } from "hugeicons-react";
@@ -33,9 +33,7 @@ const Order: React.FC = () => {
             />
           </div>
         </header>
-        <div className="flex">
-          <Menu />
-        </div>
+        <Menu />
       </OrderProvider>
     </AuthLayout>
   );

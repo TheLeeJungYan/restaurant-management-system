@@ -88,7 +88,7 @@ const Menu: React.FC = () => {
         <div
           ref={tabBox}
           id="tabBox"
-          className="flex items-center overflow-x-hidden gap-2 px-3 py-3"
+          className="flex items-center  gap-2 px-3 py-3"
           onScroll={tabBoxScroll}
         >
           <div

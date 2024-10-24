@@ -52,12 +52,12 @@ const Menu: React.FC = () => {
  
   const handleIcons: () => void = () => {
     const tempScrollValue: number = tabBox.current!.scrollLeft;
-    const scrollValue: number = Math.round(tempScrollValue);
+    const scrollValue: number = Math.round(tempScrollValue)+1;
     const maxScrollWidth: number =
       tabBox.current!.scrollWidth - tabBox.current!.clientWidth;
     console.log({scrollValue,maxScrollWidth});
     
-    if (scrollValue > 0) {
+    if (scrollValue > 1) {
       setLeftIconShow(true);
     } else {
       setLeftIconShow(false);

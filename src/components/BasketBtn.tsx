@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import BasketIcon from "../assets/icons/basket.svg";
+import { ProductContext } from "../context/ProductContext";
 interface props {
-  basketBtnClick: (id: number) => void;
   id: number;
 }
-const BasketBtn: React.FC<props> = ({ basketBtnClick, id }) => {
+const BasketBtn: React.FC<props> = ({ id }) => {
+  const productContext = useContext(ProductContext);
+  if (productContext == undefined) return null;
+  const { addProductToBasket } = productContext;
   return (
     <button
       className="transition-all bg-primaryColor h-fit rounded-full px-2 py-2 text-white shadow-md shadow-primaryColor 
@@ -14,7 +18,7 @@ const BasketBtn: React.FC<props> = ({ basketBtnClick, id }) => {
         focus:ring-primaryColor/30
       "
       onClick={() => {
-        basketBtnClick(id);
+        addProductToBasket(id);
       }}
     >
       <img src={BasketIcon} className="w-5 h-5" />

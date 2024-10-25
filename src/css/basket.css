@@ -1,0 +1,22 @@
+.basketItems {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+.basketItems:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+#basketCont::-webkit-scrollbar {
+  width: 1rem;
+}
+#basketCont::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+#basketCont::-webkit-scrollbar-thumb {
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  border-radius: 20px;
+  border: 5px solid #fff;
+
+  height: 10px;
+}

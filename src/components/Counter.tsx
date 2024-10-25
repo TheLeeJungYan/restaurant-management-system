@@ -1,25 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 import { PlusSignIcon, MinusSignIcon } from "hugeicons-react";
+
 interface Props {
   id: number;
-  addToQuantities: (id: number, qty: number) => void;
+  qty: number;
+  changeQuantityOfProduct: (id: number, qty: number) => void;
 }
-const Counter: React.FC<Props> = ({ id, addToQuantities }) => {
-  const [number, setNumber] = useState<number>(1);
-
-  useEffect(() => {
-    addToQuantities(id, number);
-  }, [number]);
+// const Counter: React.FC<Props> = ({ id, addToQuantities }) => {
+const Counter: React.FC<Props> = ({ id, qty, changeQuantityOfProduct }) => {
+  // const [number, setNumber] = useState<number>(qty);
 
   const minus: () => void = () => {
-    let currentNumber = number;
-    if (currentNumber > 1) {
-      setNumber(--currentNumber);
+    const newQty: number = --qty;
+    if (newQty > 0) {
+      changeQuantityOfProduct(id, newQty);
     }
   };
   const add: () => void = () => {
-    let currentNumber = number;
-    setNumber(++currentNumber);
+    const newQty: number = ++qty;
+    changeQuantityOfProduct(id, newQty);
   };
   return (
     <div className="bg-gray-200 px-1 py-1 w-fit rounded-full flex items-center gap-3 mt-1 ">
@@ -31,7 +30,7 @@ const Counter: React.FC<Props> = ({ id, addToQuantities }) => {
         <MinusSignIcon size={16} />
       </button>
       <div className="font-poppins text-sm w-5 flex items-center justify-center">
-        {number}
+        {qty}
       </div>
       <button
         type="button"

@@ -92,7 +92,7 @@ const Basket: React.FC = () => {
           {basketProducts &&
             basketProducts.map((bp) => {
               return (
-                <div className="flex gap-4 py-2 basketItems">
+                <div className="flex gap-4 py-2 basketItems" key={bp.ID}>
                   <div className="shrink-0">
                     <img
                       src={getProImageUrl(bp.ID)}

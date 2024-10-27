@@ -4,9 +4,12 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import {router} from './router.tsx'
 import "./index.css";
-
+import 'rsuite/dist/rsuite.min.css';  // or 'rsuite/styles/index.less';
+import { CustomProvider } from 'rsuite';
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <CustomProvider>
     <RouterProvider router={router}></RouterProvider>
+    </CustomProvider>
   </StrictMode>
 );

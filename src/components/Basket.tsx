@@ -4,6 +4,9 @@ import TableIcon from "../assets/icons/Table";
 import { ProductContext } from "../context/ProductContext";
 import { Cancel01Icon } from "hugeicons-react";
 import Counter from "../components/Counter";
+import {
+  ShoppingBasketRemove03Icon
+}from "hugeicons-react";
 import "../css/basket.css";
 const Basket: React.FC = () => {
   const productContext = useContext(ProductContext);
@@ -23,6 +26,10 @@ const Basket: React.FC = () => {
     getProImageUrl,
     removeProductFromBasket,
     changeQuantityOfProductInBasket,
+    submit,
+    customerOrTableError,
+    setCustomerOrTableError,
+    basketEmptyError
   } = productContext;
 
   return (
@@ -32,7 +39,7 @@ const Basket: React.FC = () => {
           <div className="text-2xl font-semibold font-nunito ">
             Current Order
           </div>
-          <div className="flex flex-col font-inter text-sm gap-4">
+          <div className="flex flex-col font-inter text-sm">
             <div className="bg-gray-100 border  flex *:flex-1 *:flex *:items-center *:justify-center *:py-2 *:gap-2 *:transition-all *:rounded-md gap-2 py-1 font-semibold px-1 rounded-md shadow-sm ">
               <button
                 className={`${
@@ -64,8 +71,8 @@ const Basket: React.FC = () => {
               </button>
             </div>
             <div
-              className={`bg-white border shadow-sm rounded-lg w-2/3 flex *:py-3 overflow-hidden ${
-                customerOrTableFocus
+              className={`mt-4 bg-white border shadow-sm rounded-lg w-2/3 flex *:py-3 overflow-hidden ${
+                customerOrTableFocus || customerOrTableError
                   ? "ring-primaryColor/20 ring ring-opacity-50 border-primaryColor/50"
                   : ""
               }`}
@@ -83,16 +90,20 @@ const Basket: React.FC = () => {
                 type="text"
                 className="flex-1 outline-0 px-2 truncate"
                 value={customerOrTable || ""}
-                onChange={(e) => customerOrTableInput(e.target.value)}
+                onChange={(e) => {customerOrTableInput(e.target.value); setCustomerOrTableError(false)}}
               />
             </div>
+            {customerOrTableError && <span className="font-poppins text-primaryColor text-xs mt-1">* {orderSelection} is required</span>}
           </div>
         </div>
         <div className="flex flex-col pb-4 overflow-auto" id="basketCont">
+          {basketProducts.length == 0 && <div className={`flex-1  flex flex-col items-center py-10 transition-all duration-400 ${basketEmptyError?'text-primaryColor basketEmptyError':'text-gray-300'}`}>
+            <ShoppingBasketRemove03Icon size={24}/>
+            <span className="font-poppins mt-2 text-xs">No items</span></div>}
           {basketProducts &&
             basketProducts.map((bp) => {
               return (
-                <div className="flex gap-4 py-2 basketItems" key={bp.ID}>
+                <div className="flex gap-4 py-2 basketItems" key={bp.ID} id={`b${bp.ID}`}>
                   <div className="shrink-0">
                     <img
                       src={getProImageUrl(bp.ID)}
@@ -177,7 +188,8 @@ const Basket: React.FC = () => {
             ).toFixed(2)}
           </div>
         </div>
-        <button className="bg-primaryColor text-white px-4 py-3 rounded-md font-bold text-xl mt-2">
+        {basketEmptyError && <span className="font-poppins text-primaryColor text-xs mt-">* Basket is empty !</span>}
+        <button className="bg-primaryColor text-white px-4 py-3 rounded-md font-bold text-xl mt-2" onClick={submit} >
           Submit
         </button>
       </div>

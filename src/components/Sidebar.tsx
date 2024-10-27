@@ -25,7 +25,7 @@ const SideBar: React.FC = () => {
   return (
     
     <nav
-      className={`bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${sideBarExpand ? "w-72" : "w-22"}`}
+      className={` bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-md shrink-0  fixed h-full ${sideBarExpand ? "w-72" : "w-22"}`}
       onMouseEnter={() => toggleSideBar(true)}
       onMouseLeave={() => toggleSideBar(false)}
     >
@@ -53,17 +53,17 @@ const SideBar: React.FC = () => {
         >
           <div
             id="default"
-            className=" flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-8  border-gray-150 border-b pb-3"
+            className=" flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-8   border-gray-150 border-b pb-3 "
           >
             <Link
               to="/"
-              className=" bg-primaryColor text-white hover:bg-primaryColor hover:text-white"
+              className=" bg-primaryColor text-white hover:bg-primaryColor hover:text-white "
             >
               <div>
                 <ShoppingBag01Icon size={24} />
               </div>
 
-              <span>Ordering Process</span>
+              <span >Ordering Process</span>
             </Link>
             <Link
               to="/transactions"
@@ -103,9 +103,9 @@ const SideBar: React.FC = () => {
                 <Settings03Icon size={20} className="settingIcon" />
               
             </span>
-            <div className="flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:text-sm *:gap-8 border-gray-150">
+            <div className="flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:text-sm *:gap-8 border-gray-150" id="maintenance">
               <Link
-                to="/products"
+                to="/productManagement"
                 className="text-gray-400 hover:bg-primaryColor hover:text-white"
               >
                 <div>

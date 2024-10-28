@@ -11,20 +11,21 @@ const Order: React.FC = () => {
   return (
     <AuthLayout>
       <ProductProvider>
-        {/* <CursorAnimation/> */}
-        <header className="flex items-center">
-          <SearchBar />
-          <div className="ml-auto bg-white rounded-full p-2 border border-gray-200 cursor-pointer flex gap-2 items-center">
-            <img
-              src={UserImg}
-              alt=""
-              className="rounded-full h-12 w-12 object-cover flex-1"
-            />
+        <div className="flex flex-col flex-1 py-10 px-5">
+          <header className="flex items-center">
+            <SearchBar />
+            <div className="ml-auto bg-white rounded-full p-2 border border-gray-200 cursor-pointer flex gap-2 items-center">
+              <img
+                src={UserImg}
+                alt=""
+                className="rounded-full h-12 w-12 object-cover flex-1"
+              />
+            </div>
+          </header>
+          <div className="flex  ">
+            <Menu />
+            <Basket />
           </div>
-        </header>
-        <div className="flex  ">
-          <Menu />
-          <Basket />
         </div>
       </ProductProvider>
     </AuthLayout>

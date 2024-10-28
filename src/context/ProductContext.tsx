@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../config";
 import productsData from "../data/product";
 import PreLoader from "../components/PreLoader";
-import { Message, useToaster } from 'rsuite';
+import { Message, useToaster } from "rsuite";
 interface Product {
   ID: number;
   NAME: string;
@@ -33,8 +33,8 @@ interface productContextType {
   searchQuery: string | null;
   basketProducts: BasketPro[] | [];
   tax: number;
-  customerOrTableError:boolean;
-  basketEmptyError:boolean;
+  customerOrTableError: boolean;
+  basketEmptyError: boolean;
   changeOrderSelection: (selection: string) => void;
   getImageUrl: (name: string) => string;
   getProImageUrl: (id: number) => string;
@@ -45,12 +45,18 @@ interface productContextType {
   addProductToBasket: (id: number) => void;
   removeProductFromBasket: (id: number) => void;
   changeQuantityOfProductInBasket: (id: number, quantity: number) => void;
-  submit:() => void;
+  submit: () => void;
   setCustomerOrTableError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // type Status = 'info' | 'success' | 'warning' | 'error';
-type PlacementType = 'topCenter' | 'topStart' | 'topEnd' | 'bottomCenter' | 'bottomStart' | 'bottomEnd';
+type PlacementType =
+  | "topCenter"
+  | "topStart"
+  | "topEnd"
+  | "bottomCenter"
+  | "bottomStart"
+  | "bottomEnd";
 export const ProductContext = createContext<productContextType | undefined>(
   undefined
 );
@@ -69,32 +75,33 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [orderSelection, setOrderSelection] = useState<string>("Customer");
   const [customerOrTable, setCustomerOrTable] = useState<string | null>("");
-  const [basketEmptyError, setBasketEmptyError] =useState<boolean>(false);
-  const [customerOrTableError, setCustomerOrTableError] = useState<boolean>(false);
+  const [basketEmptyError, setBasketEmptyError] = useState<boolean>(false);
+  const [customerOrTableError, setCustomerOrTableError] =
+    useState<boolean>(false);
   const tax: number = 10;
-  const placement:PlacementType | undefined = 'topEnd';
+  const placement: PlacementType | undefined = "topEnd";
   const toaster = useToaster();
 
-  const submit:() => void = async() => {
-      if(!customerOrTable?.trim()){
-        console.log('empty');
-        setCustomerOrTableError(true);
-        return ;
-      }
+  const submit: () => void = async () => {
+    if (!customerOrTable?.trim()) {
+      console.log("empty");
+      setCustomerOrTableError(true);
+      return;
+    }
 
-      if(!basketProducts.length){
-        setBasketEmptyError(true);
-        console.log('basket empty')
-        return;
-      }
-      console.log('have value');
-      try {
-        const response = await axios.post(`${BASE_URL}/create_transaction`); // Added await for the axios call
-        console.log('success:',response);
-      } catch (error) {
-        console.error("Error submitting data:", error); // Handle error
-      }
-  }
+    if (!basketProducts.length) {
+      setBasketEmptyError(true);
+      console.log("basket empty");
+      return;
+    }
+    console.log("have value");
+    try {
+      const response = await axios.post(`${BASE_URL}/create_transaction`); // Added await for the axios call
+      console.log("success:", response);
+    } catch (error) {
+      console.error("Error submitting data:", error); // Handle error
+    }
+  };
   const getImageUrl: (name: string) => string = (name) => {
     return new URL(`../assets/icons/${name}.svg`, import.meta.url).href;
   };
@@ -156,17 +163,16 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     const productWithQty = productsWithQty?.find((p) => p.ID === id);
     const productInfo = products?.find((p) => p.ID === id);
     let update = false;
-    
+
     if (!productWithQty || !productInfo) return;
     setBasketEmptyError(false);
     const productName = productInfo.NAME;
-    if(basketProducts.find(item=>item.ID === id)){
+    if (basketProducts.find((item) => item.ID === id)) {
       update = true;
     }
     setBasketProducts((prevBasket) => {
       const existingItem = prevBasket.find((item) => item.ID === id);
       if (existingItem) {
-        
         return prevBasket.map((item) =>
           item.ID === id
             ? {
@@ -190,23 +196,20 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
         ];
       }
     });
-    let msg ='';
-    if(update){
-      msg = `updated successfully`; 
-    }else{
-      msg = `created successfully`; 
+    let msg = "";
+    if (update) {
+      msg = `updated successfully`;
+    } else {
+      msg = `created successfully`;
     }
     const message = (
       <Message showIcon type="success" closable>
         <strong>{productName}</strong> {msg} .
       </Message>
     );
-    toaster.push(message, { placement , duration: 3000 })
-    
+    toaster.push(message, { placement, duration: 3000 });
   };
   useEffect(() => {
-    setLoading(false);
-
     setProducts(productsData);
     const newData = productsData.map((p) => {
       return {
@@ -241,6 +244,7 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     //     setLoading(false);
 
     //   });
+    setLoading(false);
   }, []);
   if (loading) {
     return <PreLoader />;
@@ -285,7 +289,7 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
         submit,
         customerOrTableError,
         setCustomerOrTableError,
-        basketEmptyError
+        basketEmptyError,
       }}
     >
       {children}

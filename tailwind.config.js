@@ -15,9 +15,9 @@ export default {
         22: "5.5rem",
         112: "28rem",
       },
-      zIndex:{
-        100:100
-      }
+      zIndex: {
+        100: 100,
+      },
     },
   },
   plugins: [],

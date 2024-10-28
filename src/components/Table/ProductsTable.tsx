@@ -57,12 +57,12 @@ const Table: React.FC<Props> = ({ data }) => {
                 </td>
                 <td className="font-poppins">RM {p.PRICE.toFixed(2)}</td>
                 <td>
-                  <div className=" bg-emerald-600 flex items-center w-12 rounded-full justify-end">
-                    <div className="w-6 h-6 bg-white rounded-full border border-emerald-600"></div>
+                  <div className=" bg-green-600 flex items-center w-12 rounded-full justify-end">
+                    <div className="w-6 h-6 bg-white rounded-full border-2 border-green-600"></div>
                   </div>
                 </td>
                 <td>
-                  <div className="flex gap-2 *:bg-gray-50 *:border *:rounded-md *:p-2 *:text-gray-500 ">
+                  <div className="flex gap-2  *:border *:border-gray-300 *:rounded-md *:p-2 *:text-gray-400 ">
                     <Link
                       to="#"
                       className="hover:bg-sky-500 hover:text-white hover:border-sky-500"

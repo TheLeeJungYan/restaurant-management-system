@@ -20,6 +20,7 @@ interface Options {
 }
 const ProductCreate: React.FC = () => {
   const [options, setOptions] = useState<[] | Options[]>([]);
+  
   return (
     <AuthLayout>
       <MaintenanceHeader>
@@ -74,8 +75,16 @@ const ProductCreate: React.FC = () => {
                 className="font-poppins px-4 py-3 border rounded-lg shadow-sm outline-0 mt-5"
               ></textarea>
             </InputContainer>
-            <InputContainer title={"Product Options"} productOption={true}>
-              <div></div>
+            <InputContainer title={"Product Options"} productOption={true} setOptions={setOptions}>
+              <div className="flex flex-col gap-2">
+                {options && options.map((o)=>{
+                  return (
+                    <div className="py-2 px-4 bg-gray-300 rounded-md">
+                      <input type="text"  value={o.name}/>
+                    </div>
+                  )
+                })}
+              </div>
             </InputContainer>
           </div>
           <div className="flex flex-col basis-1/3 gap-5 ">

@@ -9,17 +9,18 @@ interface Props {
   children: React.ReactNode;
   title: string;
   productOption?: boolean;
-  setOption?: React.Dispatch<React.SetStateAction<[] | Options[]>>;
+  setOptions?: React.Dispatch<React.SetStateAction<[] | Options[]>>;
 }
 const InputContainer: React.FC<Props> = ({
   children,
   title,
   productOption,
-  setOption,
+  setOptions,
 }) => {
   const addOption: () => void = () => {
-    if (setOption == undefined) return;
-    setOption((prevOptions) => [
+    if (setOptions == undefined) return;
+    console.log('setoptions')
+    setOptions((prevOptions) => [
       ...prevOptions,
       {
         seq: 1,
@@ -43,12 +44,12 @@ const InputContainer: React.FC<Props> = ({
         {productOption && (
           <button
             onClick={addOption}
-            className="bg-gray-100 border-gray-300 border *:py-2 rounded-md font-poppins flex items-center"
+            className="bg-gray-100 border-gray-300 hover:bg-gray-50 border *:py-2 rounded-md font-poppins flex items-center"
           >
             <div className="px-2 border-r border-gray-300">
               <AddIcon size={16} color={"#555"} />
             </div>
-            <div className="px-2">New Options</div>
+            <div className="px-3 text-sm">New Options</div>
           </button>
         )}
       </div>

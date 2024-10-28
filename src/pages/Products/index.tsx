@@ -38,7 +38,7 @@ const ProductIndex: React.FC = () => {
               <Button
                 text={"filter"}
                 icon={<FilterHorizontalIcon size={16} />}
-                className="mr-4 text-white bg-gray-400"
+                className="mr-4 text-white bg-slate-400"
               />
 
               <Button text={"import"} icon={<CloudUploadIcon size={16} />} />

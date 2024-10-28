@@ -8,7 +8,7 @@ const AddButton: React.FC<Props> = ({ text, location }) => {
   return (
     <Link
       to={location}
-      className="flex bg-primaryColor hover:bg-primaryColor/90 items-center hover:text-white hover:no-underline text-white px-3 gap-2 font-poppins rounded-md py-2 font-medium"
+      className="flex bg-green-600 hover:bg-green-500 items-center hover:text-white hover:no-underline text-white px-3 gap-2 font-poppins rounded-md py-2 font-medium"
     >
       <div>
         <AddIcon size={16} color={"#fff"} />

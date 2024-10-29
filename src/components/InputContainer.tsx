@@ -1,6 +1,7 @@
 import { InformationCircleIcon } from "hugeicons-react";
 import AddIcon from "../assets/icons/Add";
-
+import React, { useContext } from "react";
+import { AddProductContext } from "../context/AddProductContext";
 interface Options {
   name: string;
   seq: number;
@@ -9,25 +10,15 @@ interface Props {
   children: React.ReactNode;
   title: string;
   productOption?: boolean;
-  setOptions?: React.Dispatch<React.SetStateAction<[] | Options[]>>;
 }
 const InputContainer: React.FC<Props> = ({
   children,
   title,
   productOption,
-  setOptions,
 }) => {
-  const addOption: () => void = () => {
-    if (setOptions == undefined) return;
-    console.log('setoptions')
-    setOptions((prevOptions) => [
-      ...prevOptions,
-      {
-        seq: 1,
-        name: "adad",
-      },
-    ]);
-  };
+  const addProductContext = useContext(AddProductContext);
+  if (addProductContext == undefined) return;
+  const { addOptionGroup } = addProductContext;
   return (
     <div className="bg-white rounded-md py-6 px-8 flex flex-col border">
       <div className="flex items-center justify-between">
@@ -43,13 +34,13 @@ const InputContainer: React.FC<Props> = ({
         </div>
         {productOption && (
           <button
-            onClick={addOption}
+            onClick={addOptionGroup}
             className="bg-gray-100 border-gray-300 hover:bg-gray-50 border *:py-2 rounded-md font-poppins flex items-center"
           >
             <div className="px-2 border-r border-gray-300">
               <AddIcon size={16} color={"#555"} />
             </div>
-            <div className="px-3 text-sm">New Options</div>
+            <div className="px-3 text-sm">New Option Group</div>
           </button>
         )}
       </div>

@@ -1,0 +1,19 @@
+.checkBoxInput:checked ~ .checkBoxDummy {
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+  border: 1px solid rgb(22 163 74 / var(--tw-bg-opacity));
+  /* border: 1px solid rgb(22 101 52); */
+}
+
+.optionDlt {
+  top: -8px;
+  left: -8px;
+}
+
+#productOptionTable thead tr th:first-child {
+  padding-left: 0.5rem !important;
+  color: #000;
+  cursor: pointer;
+}
+#productOptionTable thead tr th:first-child:hover {
+  color: #555;
+}

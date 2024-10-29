@@ -14,7 +14,6 @@ const DragAndDropFileInput: React.FC = () => {
     setPreviewImage,
     previewImage,
   } = addProductContext;
-  console.log(image);
   const acceptedTypes: string[] = ["image/jpeg", "image/png", "image/jpg"];
   const checkFileType: (file: File) => boolean = (file) => {
     return acceptedTypes.includes(file.type);

@@ -1,4 +1,5 @@
 import React, { useState, createContext } from "react";
+import { useForm, UseFormRegister } from "react-hook-form";
 interface Options {
   option: string;
   desc: string;
@@ -30,6 +31,14 @@ interface AddProductContextType {
   setImageError: React.Dispatch<React.SetStateAction<boolean>>;
   previewImage: null | string;
   setPreviewImage: React.Dispatch<React.SetStateAction<string | null>>;
+  register: UseFormRegister<Inputs>
+}
+
+interface Inputs {
+  name:string;
+  description:string;
+  category:number;
+  price:number;
 }
 export const AddProductContext = createContext<
   AddProductContextType | undefined
@@ -38,6 +47,13 @@ export const AddProductContext = createContext<
 const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: {errors,isSubmitting},
+    reset,
+    getValues
+  } = useForm<Inputs>();
   const [image, setImage] = useState<null | File>(null);
   const [imageError, setImageError] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<null | string>(null);
@@ -147,6 +163,7 @@ const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AddProductContext.Provider
       value={{
+        register,
         image,
         setImage,
         previewImage,

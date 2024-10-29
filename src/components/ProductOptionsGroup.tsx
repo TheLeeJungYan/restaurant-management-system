@@ -9,6 +9,7 @@ import {
   Delete02Icon,
   Money03Icon,
 } from "hugeicons-react";
+import "../css/optionTable.css";
 import SuccessIcon from "../assets/icons/Success";
 const ProductOptionsGroup: React.FC = () => {
   const addProductContext = useContext(AddProductContext);

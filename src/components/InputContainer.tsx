@@ -18,7 +18,14 @@ const InputContainer: React.FC<Props> = ({
 }) => {
   const addProductContext = useContext(AddProductContext);
   if (addProductContext == undefined) return;
-  const { addOptionGroup } = addProductContext;
+  const { appendOptionGroup } = addProductContext;
+  const addOptionGroup: () => void = () => {
+    appendOptionGroup({
+      name: "",
+      collapse: false,
+      options: [{ option: "", desc: "", price: "0.00", default: false }],
+    });
+  };
   return (
     <div className="bg-white rounded-md py-6 px-8 flex flex-col border">
       <div className="flex items-center justify-between">
@@ -34,6 +41,7 @@ const InputContainer: React.FC<Props> = ({
         </div>
         {productOption && (
           <button
+            type={"button"}
             onClick={addOptionGroup}
             className="bg-gray-100 border-gray-300 hover:bg-gray-50 border *:py-2 rounded-md font-poppins flex items-center"
           >

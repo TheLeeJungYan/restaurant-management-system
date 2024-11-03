@@ -11,7 +11,7 @@ import {
 } from "hugeicons-react";
 import "../css/optionTable.css";
 import SuccessIcon from "../assets/icons/Success";
-import { useFieldArray, UseFormRegister } from "react-hook-form";
+import { Control, useFieldArray, UseFormRegister } from "react-hook-form";
 interface Options {
   option: string;
   desc: string;
@@ -31,11 +31,21 @@ interface Inputs {
   image: File | undefined;
   optionGroups: [] | OptionsGrp[];
 }
+
 const ProductOptions: React.FC<{
   ogIndex: number;
   oIndex: number;
   register: UseFormRegister<Inputs>;
-}> = ({ ogIndex, oIndex, register }) => {
+  control: Control<Inputs, any>
+}> = ({ ogIndex, oIndex, register,control }) => {
+  const {
+    fields: optionFields,
+    append: appendOption,
+    remove: removeOption,
+  } = useFieldArray({
+    name:`optionGroups.${ogIndex}.options`,
+    control
+  })
   return (
     <tr className="*:border-b *:py-1 *:px-2" key={oIndex}>
       <td></td>
@@ -93,10 +103,11 @@ const ProductOptions: React.FC<{
     </tr>
   );
 };
+
 const ProductOptionsGroup: React.FC = () => {
   const addProductContext = useContext(AddProductContext);
   if (addProductContext == undefined) return;
-  const { register, optionGroupFields, removeOptionGroup } = addProductContext;
+  const { register, optionGroupFields, removeOptionGroup, control } = addProductContext;
   const addNewOptionGroup: (ogIndex: number) => void = (ogIndex) => {
     console.log(ogIndex);
   };
@@ -178,6 +189,7 @@ const ProductOptionsGroup: React.FC = () => {
                             oIndex={oIndex}
                             ogIndex={ogIndex}
                             register={register}
+                            control={control}
                           />
                         );
                       })}

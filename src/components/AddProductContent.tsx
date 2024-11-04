@@ -21,11 +21,11 @@ interface Options {
   option: string;
   desc: string;
   price: string;
-  default: boolean;
 }
 interface OptionsGrp {
   name: string;
   collapse: boolean;
+  default: string;
   options: Options[];
 }
 interface Inputs {
@@ -39,7 +39,7 @@ interface Inputs {
 const AddProductContent: React.FC = () => {
   const context = useContext(AddProductContext);
   if (context == undefined) return;
-  const { register, handleSubmit, errors, setError } = context;
+  const { register, handleSubmit, errors, setValue } = context;
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   return (
     <>
@@ -144,7 +144,7 @@ const AddProductContent: React.FC = () => {
                 <DragAndDropFileInput
                   register={register}
                   errors={errors}
-                  setError={setError}
+                  setValue={setValue}
                 />
               </InputContainer>
 
@@ -172,7 +172,6 @@ const AddProductContent: React.FC = () => {
             </div>
           </div>
         </div>
-        //{" "}
       </form>
     </>
   );

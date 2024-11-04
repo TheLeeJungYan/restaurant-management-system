@@ -23,7 +23,8 @@ const InputContainer: React.FC<Props> = ({
     appendOptionGroup({
       name: "",
       collapse: false,
-      options: [{ option: "", desc: "", price: "0.00", default: false }],
+      default: "0",
+      options: [{ option: "", desc: "", price: "0.00" }],
     });
   };
   return (

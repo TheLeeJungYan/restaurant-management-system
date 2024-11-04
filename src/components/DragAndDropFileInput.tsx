@@ -1,18 +1,21 @@
-import { Image02Icon } from "hugeicons-react";
+import { Image02Icon, ImageUploadIcon } from "hugeicons-react";
 import { useRef, useState } from "react";
 import React from "react";
-import { UseFormRegister, UseFormSetError } from "react-hook-form";
+import {
+  UseFormRegister,
+  UseFormSetError,
+  UseFormSetValue,
+} from "react-hook-form";
 import { FieldErrors } from "react-hook-form";
-
 interface Options {
   option: string;
   desc: string;
   price: string;
-  default: boolean;
 }
 interface OptionsGrp {
   name: string;
   collapse: boolean;
+  default: string;
   options: Options[];
 }
 interface Inputs {
@@ -26,21 +29,47 @@ interface Inputs {
 interface Props {
   register: UseFormRegister<Inputs>;
   errors: FieldErrors<Inputs>;
-  setError: UseFormSetError<Inputs>;
+  setValue: UseFormSetValue<Inputs>;
 }
 
 const DragAndDropFileInput: React.FC<Props> = ({
   register,
   errors,
-  setError,
+  setValue,
 }) => {
   const [overlayShow, setOverlayShow] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
+  const [dragOVer, setDragOver] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-
+  const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
   const acceptedTypes: string[] = ["image/jpeg", "image/png", "image/jpg"];
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = "copy"; // Show the copy cursor
 
+    // Only set the dragging state if not already true
+    if (!isDraggingOver) {
+      setIsDraggingOver(true);
+    }
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingOver(false); // Reset state when leaving
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingOver(false);
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length === 0 || !inputRef.current) return;
+    console.log(files[0]);
+    setValue("image", files[0]);
+  };
   return (
     <div className="flex flex-col">
       {previewImage ? (
@@ -61,7 +90,15 @@ const DragAndDropFileInput: React.FC<Props> = ({
               >
                 Browse
               </label>
-              <button className="bg-white rounded-full px-3 font-poppins py-2 cursor-pointer">
+              <button
+                className="bg-white rounded-full px-3 font-poppins py-2 cursor-pointer"
+                onClick={() => {
+                  if (!inputRef.current) return;
+                  inputRef.current.value = "";
+                  setPreviewImage(null);
+                  setImageName(null);
+                }}
+              >
                 Delete
               </button>
             </div>
@@ -77,28 +114,42 @@ const DragAndDropFileInput: React.FC<Props> = ({
       ) : (
         <div>
           <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             className={`${
               errors.image ? "border-primaryColor" : "border-gray-300"
-            } h-60 border rounded-md border-dashed flex items-center justify-center flex-col font-poppins`}
+            } h-60 border rounded-md border-dashed flex items-center justify-center flex-col font-poppins ${
+              isDraggingOver &&
+              "border-green-600 border-2 bg-green-50 text-green-600"
+            }`}
           >
-            <Image02Icon
-              size={24}
-              className={`${
-                errors.image
-                  ? "text-primaryColor  drop-shadow-error"
-                  : "text-gray-400"
-              }`}
-            />
-            <span className="text-sm text-gray-500 mt-2">
-              Drag and Drop your product Image
-            </span>
-            <span className="text-xs text-gray-400">or</span>
-            <label
-              htmlFor="imgInput"
-              className="underline text-blue-500 cursor-pointer"
-            >
-              Browse
-            </label>
+            {isDraggingOver ? (
+              <>
+                <ImageUploadIcon size={24} />
+              </>
+            ) : (
+              <>
+                <Image02Icon
+                  size={24}
+                  className={`${
+                    errors.image
+                      ? "text-primaryColor  drop-shadow-error"
+                      : "text-gray-400"
+                  }`}
+                />
+                <span className="text-sm text-gray-500 mt-2">
+                  Drag and Drop your product Image
+                </span>
+                <span className="text-xs text-gray-400">or</span>
+                <label
+                  htmlFor="imgInput"
+                  className="underline text-blue-500 cursor-pointer"
+                >
+                  Browse
+                </label>
+              </>
+            )}
           </div>
           <span
             className={`text-xs font-poppins mt-1 ${
@@ -126,13 +177,13 @@ const DragAndDropFileInput: React.FC<Props> = ({
           onChange: (e) => {
             if (!e.target.files[0]) return;
             const file = e.target.files[0];
-            setPreviewImage(URL.createObjectURL(file));
-            return;
+            // setPreviewImage(URL.createObjectURL(file));
+            console.log(file.type);
             if (!acceptedTypes.includes(file.type)) {
-              setError("image", {
-                type: "manual",
-                message: "type",
-              });
+              // setError("image", {
+              //   type: "manual",
+              //   message: "type",
+              // });
               e.target.value = "";
               setPreviewImage(null);
               setImageName(null);

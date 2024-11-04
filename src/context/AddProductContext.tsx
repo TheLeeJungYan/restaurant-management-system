@@ -10,42 +10,31 @@ import {
   UseFieldArrayRemove,
   UseFieldArrayAppend,
   Control,
+  UseFormGetValues,
+  UseFormSetValue,
 } from "react-hook-form";
 
 interface AddProductContextType {
-  // optionGroups: [] | OptionsGrp[];
-  // optionGrpValueChange: (index: number, value: string) => void;
-  // addOptionGroup: () => void;
-  // removeOptionGrp: (index: number) => void;
-  // addOption: (index: number) => void;
-  // removeOption: (ogIndex: number, oIndex: number) => void;
-  // optionInputValueChange: (
-  //   ogIndex: number,
-  //   oIndex: number,
-  //   name: string,
-  //   value: string | boolean
-  // ) => void;
-  // optionTableCollapse: (ogIndex: number) => void;
-
   register: UseFormRegister<Inputs>;
   handleSubmit: UseFormHandleSubmit<Inputs, undefined>;
   errors: FieldErrors<Inputs>;
   setError: UseFormSetError<Inputs>;
-
   optionGroupFields: FieldArrayWithId<Inputs, "optionGroups", "id">[];
   removeOptionGroup: UseFieldArrayRemove;
   appendOptionGroup: UseFieldArrayAppend<Inputs, "optionGroups">;
   control: Control<Inputs, unknown>;
+  getValues: UseFormGetValues<Inputs>;
+  setValue: UseFormSetValue<Inputs>;
 }
 interface Options {
   option: string;
   desc: string;
   price: string;
-  default: boolean;
 }
 interface OptionsGrp {
   name: string;
   collapse: boolean;
+  default: string;
   options: Options[];
 }
 interface Inputs {
@@ -63,7 +52,6 @@ export const AddProductContext = createContext<
 const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  
   const {
     register,
     control,
@@ -72,6 +60,7 @@ const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
     formState: { errors, isSubmitting },
     reset,
     getValues,
+    setValue,
   } = useForm<Inputs>({
     defaultValues: {
       name: "",
@@ -83,12 +72,12 @@ const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
         {
           name: "",
           collapse: false,
+          default: "0",
           options: [
             {
               option: "",
               desc: "",
               price: "0.00",
-              default: false,
             },
           ],
         },
@@ -104,7 +93,7 @@ const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
     name: "optionGroups",
     control,
   });
- 
+
   return (
     <AddProductContext.Provider
       value={{
@@ -116,6 +105,8 @@ const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
         appendOptionGroup,
         removeOptionGroup,
         control,
+        getValues,
+        setValue,
       }}
     >
       {children}

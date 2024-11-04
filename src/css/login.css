@@ -1,0 +1,20 @@
+.shadow-special{
+    box-shadow:rgb(0 0 0 ) 0 6px 64px 0;
+    position:absolute;
+    top:-1px;
+    
+}
+
+.box-shadow-login{
+    box-shadow:rgb(234, 234, 234) 0px 0px 0px 1px, rgba(143, 143, 143, 0.2) 0px 1px 3px 0px, rgba(61, 61, 61, 0.04) 0px -2.4px 0px 0px inset, rgba(0, 0, 0, 0.04) 0px 6px 13px 0px, rgba(0, 0, 0, 0.02) 0px 53px 32px 0px
+}
+
+.j2{
+    left:-3px;
+   
+}
+
+.j1{
+    left:2px;
+ 
+}

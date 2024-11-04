@@ -16,7 +16,7 @@ import {
   Control,
   FieldErrors,
   useFieldArray,
-  UseFormGetValues,
+  useWatch,
   UseFormRegister,
 } from "react-hook-form";
 import ErrorText from "./ErrorText";
@@ -164,7 +164,7 @@ const ProductOptions: React.FC<{
                     <input
                       placeholder="0.00"
                       type="text"
-                      className="flex-1 capitalize outline-0"
+                      className="flex-1 capitalize outline-0"   
                       {...register(
                         `optionGroups.${ogIndex}.options.${oIndex}.price`,
                         {
@@ -260,6 +260,55 @@ const ProductOptions: React.FC<{
   );
 };
 
+const CollapseButton:React.FC<{ 
+  ogIndex: number;
+  control: Control<Inputs, unknown>;
+  register: UseFormRegister<Inputs>;
+  
+}> = ({register,control,ogIndex}) => {
+
+  const isCollapsed = useWatch({
+    control,
+    name:`optionGroups.${ogIndex}.collapse`,
+  })
+  console.log(isCollapsed);
+  return (
+    <label className="border-l border-gray-300 px-3 flex items-center bg-gray-100 cursor-pointer">    
+        <input type="checkbox" className="w-0 h-0 opacity-0"  {...register(`optionGroups.${ogIndex}.collapse`)}/>
+        <ArrowDown01Icon
+          size={18}
+          className={`${!isCollapsed && 'rotate-180'}`}
+        />
+      </label>
+  )
+}
+
+const CollapsibleTable:React.FC<{ 
+  ogIndex: number;
+  control: Control<Inputs, unknown>;
+  register: UseFormRegister<Inputs>;
+  errors: FieldErrors<Inputs>;
+}> = ({register,control,ogIndex,errors}) =>{
+  const isCollapsed = useWatch({
+    control,
+    name:`optionGroups.${ogIndex}.collapse`,
+  })
+
+  return (
+    <div
+      className={`mt-2 w-full transition-all duration-500 overflow-hidden ${
+        isCollapsed ? "hidden" : ""
+      }`}
+    >
+      <ProductOptions
+        ogIndex={ogIndex}
+        control={control}
+        register={register}
+        errors={errors}
+      />
+    </div>
+  );
+}
 const ProductOptionsGroup: React.FC = () => {
   const addProductContext = useContext(AddProductContext);
   if (addProductContext == undefined) return;
@@ -294,15 +343,8 @@ const ProductOptionsGroup: React.FC = () => {
                       required: "Option Group is required",
                     })}
                   />
-                  <button
-                    className="border-l border-gray-300 px-3 bg-gray-100"
-                    type="button"
-                  >
-                    <ArrowDown01Icon
-                      size={18}
-                      className={`${og.collapse ? "" : "rotate-180"}`}
-                    />
-                  </button>
+                  <CollapseButton ogIndex={ogIndex} control={control} register={register}/>
+                 
                 </div>
               </div>
               {errors.optionGroups?.[`${ogIndex}`]?.name?.message && (
@@ -310,18 +352,7 @@ const ProductOptionsGroup: React.FC = () => {
                   text={errors.optionGroups?.[`${ogIndex}`]?.name?.message}
                 />
               )}
-              <div
-                className={`mt-2 w-full transition-all duration-500 overflow-hidden ${
-                  og.collapse ? "hidden" : ""
-                }`}
-              >
-                <ProductOptions
-                  ogIndex={ogIndex}
-                  control={control}
-                  register={register}
-                  errors={errors}
-                />
-              </div>
+              <CollapsibleTable ogIndex={ogIndex} control={control} register={register} errors={errors}/>
             </div>
           );
         })}

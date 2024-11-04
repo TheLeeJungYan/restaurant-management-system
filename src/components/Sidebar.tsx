@@ -12,6 +12,7 @@ import {
   Invoice02Icon,
   Settings03Icon,
   UserListIcon,
+  Layers01Icon,
 } from "hugeicons-react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -54,7 +55,7 @@ const SideBar: React.FC = () => {
         >
           <div
             id="default"
-            className=" flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-8   border-gray-150 border-b pb-3 "
+            className={`flex flex-col gap-2 *:px-4 *:flex *:py-4 *:rounded-xl *:gap-8 border-gray-150 border-b pb-3`}
           >
             <NavLink
               to="/"
@@ -128,46 +129,13 @@ const SideBar: React.FC = () => {
 
                 <span>Products Management</span>
               </NavLink>
-              <a
-                href="#"
-                className="text-gray-400 hover:bg-primaryColor hover:text-white"
-              >
-                <div>
-                  <TableRoundIcon size={24} />
+              {/* <NavLink to="/categories">
+              <div>
+                  <Layers01Icon  size={24} />
                 </div>
 
-                <span>Table Management</span>
-              </a>
-              <a
-                href="#"
-                className=" text-gray-400 hover:bg-primaryColor hover:text-white"
-              >
-                <div>
-                  <PackageIcon size={24} />
-                </div>
-
-                <span>Stock Management</span>
-              </a>
-              <a
-                href="#"
-                className=" text-gray-400 hover:bg-primaryColor hover:text-white"
-              >
-                <div>
-                  <Invoice02Icon size={24} />
-                </div>
-
-                <span>Expenses</span>
-              </a>
-              <a
-                href="#"
-                className=" text-gray-400 hover:bg-primaryColor hover:text-white"
-              >
-                <div>
-                  <UserListIcon size={24} />
-                </div>
-
-                <span>Staff</span>
-              </a>
+                <span>Categories Management</span>
+              </NavLink> */}
             </div>
           </div>
         </div>

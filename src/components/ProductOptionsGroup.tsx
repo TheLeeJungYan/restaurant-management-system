@@ -169,8 +169,46 @@ const ProductOptions: React.FC<{
                         `optionGroups.${ogIndex}.options.${oIndex}.price`,
                         {
                           required: "Price is required",
+                          pattern: {
+                            value: /^\d*\.?\d*$/,
+                            message: "Please enter valid number",
+                          },
                         }
                       )}
+                      onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                        // Allow: backspace, delete, tab, escape, enter, decimal point
+                        if (
+                          [
+                            "Backspace",
+                            "Delete",
+                            "Tab",
+                            "Escape",
+                            "Enter",
+                            ".",
+                            "ArrowLeft",
+                            "ArrowRight",
+                            "ArrowUp",
+                            "ArrowDown",
+                          ].includes(e.key) ||
+                          // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                          (["a", "c", "v", "x"].includes(e.key.toLowerCase()) &&
+                            (e.ctrlKey || e.metaKey))
+                        ) {
+                          // If there's already a decimal point and user tries to enter another one
+                          if (
+                            e.key === "." &&
+                            (e.target as HTMLInputElement).value.includes(".")
+                          ) {
+                            e.preventDefault();
+                          }
+                          return;
+                        }
+
+                        // Prevent input if not a number (0-9)
+                        if (!/[0-9]/.test(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </label>
 

@@ -4,7 +4,7 @@ import {
   Settings03Icon,
   Tick02Icon,
 } from "hugeicons-react";
-
+import { Controller } from "react-hook-form";
 import { ArrowRight01Icon } from "hugeicons-react";
 import MaintenanceHeader from "./MaintenanceHeader";
 import AddIcon from "../assets/icons/Add";
@@ -16,6 +16,8 @@ import { useContext } from "react";
 import { AddProductContext } from "../context/AddProductContext";
 import { SubmitHandler } from "react-hook-form";
 import ErrorText from "./ErrorText";
+import axios from "axios";
+import { BASE_URL } from "../config";
 import "../css/error.css";
 interface Options {
   option: string;
@@ -39,8 +41,35 @@ interface Inputs {
 const AddProductContent: React.FC = () => {
   const context = useContext(AddProductContext);
   if (context == undefined) return;
-  const { register, handleSubmit, errors, setValue } = context;
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const { register, handleSubmit, errors, setValue, control } = context;
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+    let formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("category", data.category.toString());
+    formData.append("price", data.price.toString());
+    if (data.image === undefined) return;
+    formData.append("file", data.image, data.image.name);
+    if (data.optionGroups.length > 0) {
+      data.optionGroups.forEach((group) => {
+        formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
+      });
+    }
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/product/create`,
+        formData,
+        {
+          headers: { "content-type": "multipart/form-data" },
+        }
+      );
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <>
       <form className="flex flex-1 flex-col" onSubmit={handleSubmit(onSubmit)}>
@@ -141,10 +170,21 @@ const AddProductContent: React.FC = () => {
                 </Link>
               </InputContainer>
               <InputContainer title={"Product Image"}>
-                <DragAndDropFileInput
-                  register={register}
-                  errors={errors}
-                  setValue={setValue}
+                <Controller
+                  name="image"
+                  control={control}
+                  rules={{ required: "Image is required" }}
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <DragAndDropFileInput
+                        errors={errors}
+                        value={value}
+                        onChange={(files: File | null) => {
+                          onChange(files);
+                        }}
+                      />
+                    );
+                  }}
                 />
               </InputContainer>
 
@@ -163,7 +203,45 @@ const AddProductContent: React.FC = () => {
                       placeholder="0.00"
                       {...register("price", {
                         required: "Price is required",
+                        pattern: {
+                          value: /^\d*\.?\d*$/,
+                          message: "Please enter valid number",
+                        },
                       })}
+                      onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                        // Allow: backspace, delete, tab, escape, enter, decimal point
+                        if (
+                          [
+                            "Backspace",
+                            "Delete",
+                            "Tab",
+                            "Escape",
+                            "Enter",
+                            ".",
+                            "ArrowLeft",
+                            "ArrowRight",
+                            "ArrowUp",
+                            "ArrowDown",
+                          ].includes(e.key) ||
+                          // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                          (["a", "c", "v", "x"].includes(e.key.toLowerCase()) &&
+                            (e.ctrlKey || e.metaKey))
+                        ) {
+                          // If there's already a decimal point and user tries to enter another one
+                          if (
+                            e.key === "." &&
+                            (e.target as HTMLInputElement).value.includes(".")
+                          ) {
+                            e.preventDefault();
+                          }
+                          return;
+                        }
+
+                        // Prevent input if not a number (0-9)
+                        if (!/[0-9]/.test(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </label>
                   {errors.price && <ErrorText text={errors.price.message} />}

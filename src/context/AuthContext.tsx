@@ -1,14 +1,17 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Credentials,
   AuthContextType,
   ApiResponse,
   ApiError,
+  UserDetails,
+  CompanyDetails,
 } from "../types/type";
 import { useForm } from "react-hook-form";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../config";
+import secureLocalStorage from "react-secure-storage";
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
@@ -16,11 +19,20 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(
+    (secureLocalStorage.getItem("token") as string) || null
+  );
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(
+    (secureLocalStorage.getItem("userDetails") as UserDetails) || null
+  );
+  const [companyDetails, setCompanyDetails] = useState<CompanyDetails | null>(
+    (secureLocalStorage.getItem("companyDetails") as CompanyDetails) || null
+  );
   const [sideBarExpand, setSideBarExpand] = useState<boolean>(false);
   const toggleSideBar: (toggle: boolean) => void = (toggle) => {
     setSideBarExpand(toggle);
   };
+
   const {
     register,
     control,
@@ -33,9 +45,9 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       password: "",
     },
   });
-  const login = async (
+  const login: (
     credentials: Credentials
-  ): Promise<ApiResponse | ApiError> => {
+  ) => Promise<ApiResponse | ApiError> = async (credentials) => {
     try {
       const { data } = await axios.post<ApiResponse>(
         `${BASE_URL}/login`,
@@ -43,14 +55,20 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       return data;
     } catch (error) {
-      console.error(error);
+      if (axios.isAxiosError(error)) {
+        const { response } = error;
+        return {
+          success: false,
+          message: response?.data.detail || "error",
+        } as ApiError;
+      }
       return {
-        message: "error",
         success: false,
-        data: {},
-      };
+        message: "Internal server error",
+      } as ApiError;
     }
   };
+
   return (
     <AuthContext.Provider
       value={{
@@ -65,6 +83,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         errors,
         isSubmitting,
         reset,
+        userDetails,
+        setCompanyDetails,
+        companyDetails,
+        setUserDetails,
       }}
     >
       {children}

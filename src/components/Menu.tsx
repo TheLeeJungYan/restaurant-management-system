@@ -165,6 +165,7 @@ const Menu: React.FC = () => {
                     <img
                       src={getProImageUrl(p.ID)}
                       className="w-full object-cover h-60 productImg"
+                      loading="lazy"
                     ></img>
                   </div>
                   <div className="flex flex-col px-4 py-2">

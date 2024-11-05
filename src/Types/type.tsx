@@ -21,25 +21,32 @@ export interface AuthContextType {
   isSubmitting: boolean;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
   reset: UseFormReset<Credentials>;
+  setUserDetails: React.Dispatch<React.SetStateAction<UserDetails | null>>;
+  setCompanyDetails: React.Dispatch<React.SetStateAction<CompanyDetails>>;
+  userDetails: UserDetails | null;
+  companyDetails: CompanyDetails | null;
 }
 
 export interface ApiResponse {
   data: {
     access_token: string;
-    company: null | [];
-    user: {
-      id: number;
-      username: string;
-      email: string;
-      type_id: number;
-    };
+    company: CompanyDetails;
+    user: UserDetails;
   };
   message: string;
   success: boolean;
 }
 
 export interface ApiError {
+  success: false;
   message: string;
-  success: boolean;
-  data: object;
 }
+
+export interface UserDetails {
+  id: number;
+  username: string;
+  email: string;
+  type_id: number;
+}
+
+export type CompanyDetails = null | [];

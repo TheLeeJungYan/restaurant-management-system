@@ -27,14 +27,15 @@ const SideBar: React.FC = () => {
       className={` bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-sm border-r shrink-0  fixed h-full ${
         sideBarExpand ? "w-72" : "w-22"
       }`}
-      onMouseEnter={() => toggleSideBar(true)}
-      onMouseLeave={() => toggleSideBar(false)}
+      // onMouseEnter={() => toggleSideBar(true)}
+      // onMouseLeave={() => toggleSideBar(false)}
     >
       <div
         className="flex flex-col flex-1 overflow-y-hidden overflow-x-hidden"
         id="sidebarCont"
       >
-        <div className="px-5 flex items-center gap-4 py-7 ">
+        <div className="px-5 flex items-center gap-4 py-7 relative">
+          <button className="absolute w-5 h-5 rounded-full bg-gray-100 collapsibleButton shadow-xl border border-gray-300"></button>
           <div
             className={`h-12 rounded-2xl flex items-center justify-center px-2 bg-gray-100 shadow-md  shadow-gray-100/50 shrink-0 transition-all  ${
               sideBarExpand ? "w-20" : "w-14 "

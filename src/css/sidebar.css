@@ -27,8 +27,12 @@
 
   height: 10px;
 }
-#default>*, #maintenance>*{
-  text-decoration: none!important
+#default > *,
+#maintenance > * {
+  text-decoration: none !important
   ;
 }
-
+.collapsibleButton {
+  z-index: 1000;
+  right: -10px;
+}

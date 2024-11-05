@@ -36,7 +36,7 @@ const Table: React.FC<Props> = ({ data }) => {
         <tbody>
           {data.map((p, index) => {
             return (
-              <tr className="*:px-4 *:py-3 ">
+              <tr className="*:px-4 *:py-3 " key={index}>
                 <th className="text-left px-5">{index + 1}</th>
                 <td>
                   <div className="flex gap-3 items-center">

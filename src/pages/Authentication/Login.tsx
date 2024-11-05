@@ -6,6 +6,7 @@ import AuthenticationInputContainer from "../../components/AuthenticationInputCo
 import { AuthContext } from "../../context/AuthContext";
 import { Credentials, ApiResponse, ApiError } from "../../types/type";
 import { useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<boolean>(false);
@@ -20,6 +21,8 @@ const Login: React.FC = () => {
     login,
     setToken,
     reset,
+    setCompanyDetails,
+    setUserDetails,
   } = authContext;
   const isApiResponse = (
     response: ApiResponse | ApiError
@@ -29,17 +32,23 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<Credentials> = async (data) => {
     resetLoginError();
+
     const response: ApiResponse | ApiError = await login(data);
+    if (response === undefined) return;
+    console.log(response);
     if (response.success) {
-      console.log(response.data);
+      console.log(response);
       reset();
       if (!isApiResponse(response)) return;
-      console.log("token");
+      secureLocalStorage.setItem("token", response.data.access_token);
+      secureLocalStorage.setItem("companyDetails", response.data.company || "");
+      secureLocalStorage.setItem("userDetails", response.data.user);
       setToken(response.data.access_token);
+      setCompanyDetails(response.data.company);
+      setUserDetails(response.data.user);
       navigate("/");
     } else {
       reset({ password: "" });
-      console.log(response);
       setLoginError(true);
       setLoginErrorMsg(response.message);
     }

@@ -127,15 +127,22 @@ const SideBar: React.FC = () => {
                   <Dish01Icon size={24} />
                 </div>
 
-                <span>Products Management</span>
+                <span>Products</span>
               </NavLink>
-              {/* <NavLink to="/categories">
-              <div>
-                  <Layers01Icon  size={24} />
+              <NavLink
+                to="/categories"
+                className={({ isActive }) => {
+                  return isActive
+                    ? "bg-primaryColor text-white hover:text-white focus:text-white focus:bg-primaryColor"
+                    : "text-gray-400 hover:bg-primaryColor hover:text-white focus:text-white focus:bg-primaryColor";
+                }}
+              >
+                <div>
+                  <Layers01Icon size={24} />
                 </div>
 
-                <span>Categories Management</span>
-              </NavLink> */}
+                <span>Categories</span>
+              </NavLink>
             </div>
           </div>
         </div>

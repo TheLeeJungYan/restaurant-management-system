@@ -1,37 +1,136 @@
-import Lottie, { LottieRefCurrentProps } from 'lottie-react';
-import animationData from "../../Lottie/LoginAnimation.json"
-import "../../css/login.css"
-import { useRef } from 'react';
-const Login:React.FC = () =>{
-    const animationRef = useRef<LottieRefCurrentProps>(null)
-    return <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center ">
-        <div
-  className="absolute inset-0 h-full w-full bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"
-></div>
-        <div className="bg-white rounded-xl flex box-shadow-login font-poppins relative flex flex-col overflow-hidden">
-            <div className="flex flex-col py-8 px-10">
-                <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 border rounded-lg shadow-lg flex items-center justify-center text-Nunito font-bold bg-gray-800 text-white text-2xl"><span className="j1 relative">J</span><span className="text-yellow-300 relative j2">J</span></div>
-                <div className="flex flex-col">
-                <div className="font-semibold font-inter text-lg">Sign in to continue</div>
-                <span className="text-gray-400 text-xs">Please enter your details to login</span>
-                </div>
-                </div>
-                <div className="flex flex-col mt-8 gap-4">
-                    <div className="flex flex-col">
-                        <span className="text-xs font-semibold font-inter ml-1">Username</span>
-                        <input type="text" name="" id="" className="w-96 rounded-xl shadow-sm px-4 py-2 mt-1 border border-gray-300 outline-0" placeholder="John Doe"/>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-xs font-semibold font-inter ml-1">Password</span>
-                        <input type="password" name="" id="" className="w-96 rounded-xl shadow-sm px-4 py-2 mt-1 border border-gray-300 outline-0" placeholder="************"/>
-                        <div className="text-xs mt-2 ml-1 font-inter"><span className="text-gray-400">Forget password ?</span>&nbsp;<a href="#" className="text-black">Reset it</a></div>
-                    </div>
-                </div>
-                <button className="mt-8 bg-gray-800 rounded-xl px-2 py-3 text-white font-semibold text-md">Login</button>
-            </div>
-        </div>
-    </div>
-}
+import { UserIcon, SecurityPasswordIcon } from "hugeicons-react";
+import "../../css/login.css";
+import { SubmitHandler } from "react-hook-form";
+import React, { useContext, useState } from "react";
+import AuthenticationInputContainer from "../../components/AuthenticationInputContainer";
+import { AuthContext } from "../../context/AuthContext";
+import { Credentials, ApiResponse, ApiError } from "../../types/type";
+import { useNavigate } from "react-router-dom";
+const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const [loginError, setLoginError] = useState<boolean>(false);
+  const [loginErrorMsg, setLoginErrorMsg] = useState<string>("");
+  const authContext = useContext(AuthContext);
+  if (authContext === undefined) return;
+  const {
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    login,
+    setToken,
+    reset,
+  } = authContext;
+  const isApiResponse = (
+    response: ApiResponse | ApiError
+  ): response is ApiResponse => {
+    return (response as ApiResponse).data?.access_token !== undefined;
+  };
 
-export default Login
+  const onSubmit: SubmitHandler<Credentials> = async (data) => {
+    resetLoginError();
+    const response: ApiResponse | ApiError = await login(data);
+    if (response.success) {
+      console.log(response.data);
+      reset();
+      if (!isApiResponse(response)) return;
+      console.log("token");
+      setToken(response.data.access_token);
+      navigate("/");
+    } else {
+      reset({ password: "" });
+      console.log(response);
+      setLoginError(true);
+      setLoginErrorMsg(response.message);
+    }
+  };
+
+  const resetLoginError: () => void = () => {
+    setLoginError(false);
+    setLoginErrorMsg("");
+  };
+  return (
+    <div className="min-h-screen w-full bg-gray-100 flex gap-20 items-center justify-center">
+      <div className="absolute inset-0 h-full w-full bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+
+      <form
+        className="bg-white rounded-xl box-shadow-login font-poppins relative flex flex-col overflow-hidden h-fit"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex justify-center">
+          <div className="shadow-special h-1 w-1/2"></div>
+        </div>
+        <div className="flex flex-col py-8 px-10">
+          <div className="flex items-center gap-4">
+            {/* <div className="w-10 h-10 border rounded-lg shadow-lg flex items-center justify-center text-Nunito font-bold bg-gray-800 text-white text-2xl"><span className="j1 relative">J</span><span className="text-yellow-300 relative j2">J</span></div> */}
+            <div className="flex flex-col">
+              <div className="font-semibold font-inter text-lg">
+                Sign in to continue
+              </div>
+              <span className="text-gray-400 text-xs">
+                Please enter your details to login
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-col mt-8 gap-4">
+            <AuthenticationInputContainer
+              disabled={isSubmitting}
+              label="Username"
+              name="username_or_email"
+              initialType="text"
+              placeholder="John Doe"
+              icon={<UserIcon size={16} />}
+              register={register}
+              errors={errors}
+              loginError={loginError}
+              validationSchema={{
+                required: "Username is required",
+              }}
+              resetLoginError={resetLoginError}
+            />
+            <AuthenticationInputContainer
+              disabled={isSubmitting}
+              label="Password"
+              name="password"
+              initialType="password"
+              placeholder="------------"
+              icon={<SecurityPasswordIcon size={16} />}
+              register={register}
+              errors={errors}
+              loginError={loginError}
+              validationSchema={{
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Minlength of password is 8",
+                },
+              }}
+              resetLoginError={resetLoginError}
+            />
+          </div>
+
+          <div className="mt-4 flex flex-col gap-2">
+            {loginError && (
+              <span className="text-primaryColor text-xs">
+                * {loginErrorMsg}
+              </span>
+            )}
+            <button
+              className="flex items-center justify-center bg-gray-800 rounded-md px-2 py-3 text-white font-semibold text-md shadow-xl focus:ring focus:ring-gray-900 focus:border-gray-300 focus:ring-opacity-50 disabled:bg-gray-600"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <div className="loader"></div>
+              ) : (
+                <span>Login</span>
+              )}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Login;

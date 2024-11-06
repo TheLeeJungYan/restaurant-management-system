@@ -44,7 +44,7 @@ const AddProductContent: React.FC = () => {
   const { register, handleSubmit, errors, setValue, control } = context;
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("category", data.category.toString());
@@ -155,7 +155,7 @@ const AddProductContent: React.FC = () => {
                   }`}
                   defaultValue={""}
                 >
-                  <option disabled value="">
+                  <option disabled value="0">
                     Please Select category...
                   </option>
                   <option value="1">A</option>

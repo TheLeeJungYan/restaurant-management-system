@@ -1,5 +1,5 @@
 import Icon from "../assets/images/icon.png";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "../css/sidebar.css";
 import {
   ShoppingBag01Icon,
@@ -13,29 +13,31 @@ import {
   Settings03Icon,
   UserListIcon,
   Layers01Icon,
+  ArrowRight01Icon,
 } from "hugeicons-react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 const SideBar: React.FC = () => {
   const authContext = useContext(AuthContext);
+
   if (authContext === undefined) {
     return <div>Loading...</div>;
   }
   const { sideBarExpand, toggleSideBar } = authContext;
+  useEffect(() => {
+    authContext.toggleSideBar(false);
+  }, []);
   return (
     <nav
-      className={` bg-white flex flex-col overflow-x-hidden whitespace-nowrap transition-all duration-300 z-50 shadow-sm border-r shrink-0  fixed h-full ${
+      className={` bg-white flex flex-col whitespace-nowrap transition-all duration-300 z-50 shadow-sm border-r shrink-0  fixed h-full ${
         sideBarExpand ? "w-72" : "w-22"
       }`}
-      // onMouseEnter={() => toggleSideBar(true)}
-      // onMouseLeave={() => toggleSideBar(false)}
     >
       <div
         className="flex flex-col flex-1 overflow-y-hidden overflow-x-hidden"
         id="sidebarCont"
       >
         <div className="px-5 flex items-center gap-4 py-7 relative">
-          <button className="absolute w-5 h-5 rounded-full bg-gray-100 collapsibleButton shadow-xl border border-gray-300"></button>
           <div
             className={`h-12 rounded-2xl flex items-center justify-center px-2 bg-gray-100 shadow-md  shadow-gray-100/50 shrink-0 transition-all  ${
               sideBarExpand ? "w-20" : "w-14 "
@@ -146,6 +148,19 @@ const SideBar: React.FC = () => {
               </NavLink>
             </div>
           </div>
+        </div>
+        <div className="mt-auto flex justify-end pr-3 py-4">
+          <button
+            onClick={() => toggleSideBar(!sideBarExpand)}
+            className="w-fit bg-gray-100 shadow-sm px-3 py-3 rounded-2xl border border-gray-300 text-gray-400 hover:text-gray-500 "
+          >
+            <ArrowRight01Icon
+              size={24}
+              className={`${
+                sideBarExpand && "rotate-180"
+              } transition-all duration-400`}
+            />
+          </button>
         </div>
       </div>
     </nav>

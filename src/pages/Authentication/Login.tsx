@@ -4,7 +4,7 @@ import { SubmitHandler } from "react-hook-form";
 import React, { useContext, useState } from "react";
 import AuthenticationInputContainer from "../../components/AuthenticationInputContainer";
 import { AuthContext } from "../../context/AuthContext";
-import { Credentials, ApiResponse, ApiError } from "../../types/type";
+import { Credentials, ApiResponse, ApiError } from "../../Types/type";
 import { useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 const Login: React.FC = () => {
@@ -43,6 +43,7 @@ const Login: React.FC = () => {
       secureLocalStorage.setItem("token", response.data.access_token);
       secureLocalStorage.setItem("companyDetails", response.data.company || "");
       secureLocalStorage.setItem("userDetails", response.data.user);
+      console.log(response.data.access_token);
       setToken(response.data.access_token);
       setCompanyDetails(response.data.company);
       setUserDetails(response.data.user);

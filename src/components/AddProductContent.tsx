@@ -12,66 +12,35 @@ import { Link } from "react-router-dom";
 import InputContainer from "./InputContainer";
 import DragAndDropFileInput from "./DragAndDropFileInput";
 import ProductOptionsGroup from "./ProductOptionsGroup";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AddProductContext } from "../context/AddProductContext";
 import { SubmitHandler } from "react-hook-form";
 import ErrorText from "./ErrorText";
 import axios from "axios";
 import { BASE_URL } from "../config";
 import "../css/error.css";
-interface Options {
-  option: string;
-  desc: string;
-  price: string;
-}
-interface OptionsGrp {
-  name: string;
-  collapse: boolean;
-  default: string;
-  options: Options[];
-}
-interface Inputs {
-  name: string;
-  description: string;
-  category: number;
-  price: number;
-  image: File | undefined;
-  optionGroups: [] | OptionsGrp[];
-}
+import { AuthContext } from "../context/AuthContext";
+import Loader from "./Loader";
+
+import { Inputs } from "../Types/type";
+
 const AddProductContent: React.FC = () => {
+  const [uploading,setUploading] = useState<boolean>(false);
   const context = useContext(AddProductContext);
-  if (context == undefined) return;
+  const authContext = useContext(AuthContext);
+  if (context == undefined || authContext ==undefined) return;
+ 
+  const { token } = authContext;
   const { register, handleSubmit, errors, setValue, control } = context;
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description);
-    formData.append("category", data.category.toString());
-    formData.append("price", data.price.toString());
-    if (data.image === undefined) return;
-    formData.append("file", data.image, data.image.name);
-    if (data.optionGroups.length > 0) {
-      data.optionGroups.forEach((group) => {
-        formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
-      });
-    }
-
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/product/create`,
-        formData,
-        {
-          headers: { "content-type": "multipart/form-data" },
-        }
-      );
-      console.log(response);
-    } catch (e) {
-      console.error(e);
-    }
+    setUploading(true);
+    setTimeout(()=>{
+      setUploading(false);
+    },3000)
   };
   return (
     <>
+      <Loader show={uploading}/>
       <form className="flex flex-1 flex-col" onSubmit={handleSubmit(onSubmit)}>
         <MaintenanceHeader>
           <Settings03Icon size={24} className="text-gray-400" />
@@ -155,7 +124,7 @@ const AddProductContent: React.FC = () => {
                   }`}
                   defaultValue={""}
                 >
-                  <option disabled value="0">
+                  <option disabled value="">
                     Please Select category...
                   </option>
                   <option value="1">A</option>

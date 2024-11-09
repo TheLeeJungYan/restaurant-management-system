@@ -13,7 +13,7 @@ import {
   UseFormGetValues,
   UseFormSetValue,
 } from "react-hook-form";
-
+import { Inputs } from "../Types/type"
 interface AddProductContextType {
   register: UseFormRegister<Inputs>;
   handleSubmit: UseFormHandleSubmit<Inputs, undefined>;
@@ -26,25 +26,7 @@ interface AddProductContextType {
   getValues: UseFormGetValues<Inputs>;
   setValue: UseFormSetValue<Inputs>;
 }
-interface Options {
-  option: string;
-  desc: string;
-  price: string;
-}
-interface OptionsGrp {
-  name: string;
-  collapse: boolean;
-  default: string;
-  options: Options[];
-}
-interface Inputs {
-  name: string;
-  description: string;
-  category: number;
-  price: number;
-  image: File | undefined;
-  optionGroups: [] | OptionsGrp[];
-}
+
 export const AddProductContext = createContext<
   AddProductContextType | undefined
 >(undefined);
@@ -65,7 +47,7 @@ const AddProductContextProvider: React.FC<{ children: React.ReactNode }> = ({
     defaultValues: {
       name: "",
       description: "",
-      category: 0,
+      category: "",
       price: undefined,
       image: undefined,
       optionGroups: [

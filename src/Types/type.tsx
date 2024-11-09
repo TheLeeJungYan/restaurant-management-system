@@ -50,3 +50,23 @@ export interface UserDetails {
 }
 
 export type CompanyDetails = null | [];
+
+export interface Options {
+  option: string;
+  desc: string;
+  price: string;
+}
+export interface OptionsGrp {
+  name: string;
+  collapse: boolean;
+  default: string;
+  options: Options[];
+}
+export interface Inputs {
+  name: string;
+  description: string;
+  category: number | string;
+  price: number;
+  image: File | undefined;
+  optionGroups: [] | OptionsGrp[];
+}

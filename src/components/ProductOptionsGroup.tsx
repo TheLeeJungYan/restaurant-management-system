@@ -20,25 +20,9 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import ErrorText from "./ErrorText";
-interface Options {
-  option: string;
-  desc: string;
-  price: string;
-}
-interface OptionsGrp {
-  name: string;
-  collapse: boolean;
-  default: string;
-  options: Options[];
-}
-interface Inputs {
-  name: string;
-  description: string;
-  category: number;
-  price: number;
-  image: File | undefined;
-  optionGroups: [] | OptionsGrp[];
-}
+import { Inputs } from "../Types/type";
+
+
 
 const ProductOptions: React.FC<{
   ogIndex: number;

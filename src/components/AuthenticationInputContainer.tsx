@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ViewIcon, ViewOffSlashIcon } from "hugeicons-react";
 import { FieldError, FieldErrors, UseFormRegister } from "react-hook-form";
-import { Credentials } from "../types/type";
+import { Credentials } from "../Types/type";
 interface Props {
   label: string;
   initialType: string;

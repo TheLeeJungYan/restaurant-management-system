@@ -7,7 +7,7 @@ import {
   ApiError,
   UserDetails,
   CompanyDetails,
-} from "../types/type";
+} from "../Types/type";
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../config";
@@ -19,6 +19,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+
   const [token, setToken] = useState<string | null>(
     (secureLocalStorage.getItem("token") as string) || null
   );

@@ -70,3 +70,13 @@ export interface Inputs {
   image: File | undefined;
   optionGroups: [] | OptionsGrp[];
 }
+
+export interface Products{
+  id:number;
+  name:string;
+  price:number;
+  description:string;
+  category:string;
+  created_at:string;
+  image_url:string;
+}

@@ -1,5 +1,5 @@
 import AuthLayout from "../../layouts/AuthLayout";
-import Products from "../../data/product";
+// import Products from "../../data/product";
 import {
   Settings03Icon,
   ArrowRight01Icon,
@@ -14,7 +14,34 @@ import SearchBar from "../../components/SearchBar2";
 import Button from "../../components/Button";
 import Table from "../../components/Table/ProductsTable";
 import MaintenanceHeader from "../../components/MaintenanceHeader";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { BASE_URL } from "../../config";
+import { Products } from "../../Types/type";
 const ProductIndex: React.FC = () => {
+  const [products,setProducts] = useState<Products[] | []>([]);
+  useEffect(()=>{
+    console.log('init');
+    fetchProduct();
+  },[])
+  const authContext = useContext(AuthContext);
+  if(authContext == undefined) return ;
+  const { token } = authContext;
+  const fetchProduct = async() =>{
+    try{
+      const response = await axios.get(`${BASE_URL}/products`,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      })
+      console.log(response.data)
+      setProducts(response.data.data);
+    }catch(e){
+      console.error(e)
+    }
+  }
+ 
   return (
     <AuthLayout>
       <MaintenanceHeader>
@@ -50,10 +77,11 @@ const ProductIndex: React.FC = () => {
             </div>
           </div>
         </div>
-        <Table data={Products} />
+        <Table products={products} />
       </div>
     </AuthLayout>
   );
 };
 
 export default ProductIndex;
+

@@ -25,7 +25,7 @@ import Loader from "./Loader";
 import { Inputs } from "../Types/type";
 
 const AddProductContent: React.FC = () => {
-  const [uploading,setUploading] = useState<boolean>(false);
+  const [uploading,setUploading] = useState<boolean>(true);
   const context = useContext(AddProductContext);
   const authContext = useContext(AuthContext);
   if (context == undefined || authContext ==undefined) return;
@@ -34,9 +34,39 @@ const AddProductContent: React.FC = () => {
   const { register, handleSubmit, errors, setValue, control } = context;
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setUploading(true);
-    setTimeout(()=>{
+    // setTimeout(()=>{
+    //   setUploading(false);
+    // },3000)
+    console.log(data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("category", data.category.toString());
+    formData.append("price", data.price.toString());
+    if (data.image === undefined) return;
+    formData.append("file", data.image, data.image.name);
+    if (data.optionGroups.length > 0) {
+      data.optionGroups.forEach((group) => {
+        formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
+      });
+    }
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/product/create`,
+        formData,
+        {
+          headers: { 
+             "content-type": "multipart/form-data", 
+               "Authorization" : `Bearer ${token}`
+           },
+        }
+      );
       setUploading(false);
-    },3000)
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <>

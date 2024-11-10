@@ -4,7 +4,12 @@ import Products from "./pages/Products/index";
 import ProductsCreate from "./pages/Products/create";
 import Login from "./pages/Authentication/Login";
 import PrivateRoute from "./route/PrivateRoute";
+
+
+
+
 export const router = createBrowserRouter([
+
   {
     path: "/",
     element: <PrivateRoute />,
@@ -16,10 +21,12 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+       
       },
       {
         path: "/product/create",
         element: <ProductsCreate />,
+       
       },
     ],
   },

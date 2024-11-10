@@ -2,20 +2,12 @@ import "../../css/table.css";
 import { Delete02Icon, PencilEdit02Icon, ViewIcon } from "hugeicons-react";
 import { Link } from "react-router-dom";
 
-interface Products {
-  ID: number;
-  NAME: string;
-  IMG: string;
-  PRICE: number;
-  CATEGORY: string;
-}
+import { Products } from "../../Types/type"
 interface Props {
-  data: Products[];
+  products: Products[];
 }
-const Table: React.FC<Props> = ({ data }) => {
-  const getProImageUrl: (id: number) => string = (id) => {
-    return new URL(`../../assets/products/${id}.jpg`, import.meta.url).href;
-  };
+const Table: React.FC<Props> = ({ products }) => {
+
   return (
     <div
       id="productTable"
@@ -34,28 +26,28 @@ const Table: React.FC<Props> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((p, index) => {
+          {products.map((p, index) => {
             return (
               <tr className="*:px-4 *:py-3 " key={index}>
                 <th className="text-left px-5">{index + 1}</th>
                 <td>
                   <div className="flex gap-3 items-center">
                     <img
-                      src={getProImageUrl(p.ID)}
+                      src={p.image_url}
                       alt=""
                       className="w-16 h-16 object-cover rounded-md"
                     />
                     <div className="flex flex-col">
-                      <div className="font-poppins">{p.NAME}</div>
+                      <div className="font-poppins">{p.name}</div>
                     </div>
                   </div>
                 </td>
                 <td>
                   <div className="bg-slate-100 px-4 py-2 rounded-md inline capitalize font-semibold text-slate-500">
-                    {p.CATEGORY}
+                    {p.category}
                   </div>
                 </td>
-                <td className="font-poppins">RM {p.PRICE.toFixed(2)}</td>
+                <td className="font-poppins">RM {p.price.toFixed(2)}</td>
                 <td>
                   <div className=" bg-green-600 flex items-center w-12 rounded-full justify-end">
                     <div className="w-6 h-6 bg-white rounded-full border-2 border-green-600"></div>

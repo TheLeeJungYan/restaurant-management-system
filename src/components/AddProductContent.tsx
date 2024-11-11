@@ -8,7 +8,7 @@ import { Controller } from "react-hook-form";
 import { ArrowRight01Icon } from "hugeicons-react";
 import MaintenanceHeader from "./MaintenanceHeader";
 import AddIcon from "../assets/icons/Add";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import InputContainer from "./InputContainer";
 import DragAndDropFileInput from "./DragAndDropFileInput";
 import ProductOptionsGroup from "./ProductOptionsGroup";
@@ -21,12 +21,13 @@ import { BASE_URL } from "../config";
 import "../css/error.css";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "./Loader";
-
 import { Inputs } from "../Types/type";
-
+import { useNavigate } from 'react-router-dom'; 
+import FlashState  from "../FlashState";
 const AddProductContent: React.FC = () => {
-  const [uploading,setUploading] = useState<boolean>(true);
+  const [uploading,setUploading] = useState<boolean>(false);
   const context = useContext(AddProductContext);
+  const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   if (context == undefined || authContext ==undefined) return;
  
@@ -34,39 +35,43 @@ const AddProductContent: React.FC = () => {
   const { register, handleSubmit, errors, setValue, control } = context;
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setUploading(true);
-    // setTimeout(()=>{
-    //   setUploading(false);
-    // },3000)
-    console.log(data);
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description);
-    formData.append("category", data.category.toString());
-    formData.append("price", data.price.toString());
-    if (data.image === undefined) return;
-    formData.append("file", data.image, data.image.name);
-    if (data.optionGroups.length > 0) {
-      data.optionGroups.forEach((group) => {
-        formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
-      });
-    }
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    FlashState.set('product-success-msg',`${data.name} has created successfully!`);
+    setUploading(false);
+    navigate("/products");
+    // const formData = new FormData();
+    // formData.append("name", data.name);
+    // formData.append("description", data.description);
+    // formData.append("category", data.category.toString());
+    // formData.append("price", data.price.toString());
+    // if (data.image === undefined) return;
+    // formData.append("file", data.image, data.image.name);
+    // if (data.optionGroups.length > 0) {
+    //   data.optionGroups.forEach((group) => {
+    //     formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
+    //   });
+    // }
 
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/product/create`,
-        formData,
-        {
-          headers: { 
-             "content-type": "multipart/form-data", 
-               "Authorization" : `Bearer ${token}`
-           },
-        }
-      );
-      setUploading(false);
-      console.log(response);
-    } catch (e) {
-      console.error(e);
-    }
+    // try {
+    //   const response = await axios.post(
+    //     `${BASE_URL}/product/create`,
+    //     formData,
+    //     {
+    //       headers: { 
+    //          "content-type": "multipart/form-data", 
+    //            "Authorization" : `Bearer ${token}`
+    //        },
+    //     }
+    //   );
+    //   setUploading(false);
+    //   console.log(response);
+    //   navigate("/products");
+    //   FlashState.set('product-success-msg',`${data.name} has created successfully!`);
+    // } catch (e) {
+    //   console.error(e);
+    // }finally{
+    //   setUploading(false);
+    // }
   };
   return (
     <>

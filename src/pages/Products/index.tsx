@@ -19,12 +19,19 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../config";
 import { Products } from "../../Types/type";
+import SuccessMsg from "../../components/SuccessMsg";
+import FlashState from "../../FlashState";
 const ProductIndex: React.FC = () => {
   const [products,setProducts] = useState<Products[] | []>([]);
+
+  const [successMessage,setSuccessMessage] = useState<null | string>(null);
   useEffect(()=>{
-    console.log('init');
     fetchProduct();
   },[])
+
+  useEffect(()=>{
+    console.log('succ msg:'+successMessage);
+  },[successMessage]);
   const authContext = useContext(AuthContext);
   if(authContext == undefined) return ;
   const { token } = authContext;
@@ -35,8 +42,12 @@ const ProductIndex: React.FC = () => {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(response.data)
       setProducts(response.data.data);
+      const flashMessage = FlashState.get('product-success-msg');
+      if(flashMessage){
+        console.log(flashMessage);
+        setSuccessMessage(flashMessage)
+      }
     }catch(e){
       console.error(e)
     }
@@ -54,6 +65,7 @@ const ProductIndex: React.FC = () => {
       </MaintenanceHeader>
 
       <div className="flex-1 flex flex-col py-10 px-10">
+        <SuccessMsg msg={successMessage}/>
         <div id="filter" className="bg-white py-5 rounded-xl border">
           <div className="flex px-5 ">
             <SearchBar />

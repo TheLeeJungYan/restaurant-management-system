@@ -17,6 +17,7 @@ export default {
       },
       zIndex: {
         100: 100,
+        200: 200,
       },
     },
   },

@@ -1,5 +1,5 @@
 import "../../css/table.css";
-import { Delete02Icon, PencilEdit02Icon, ViewIcon } from "hugeicons-react";
+import { Delete02Icon, PencilEdit02Icon,ViewIcon } from "hugeicons-react";
 import { Link } from "react-router-dom";
 
 import { Products } from "../../Types/type"
@@ -22,7 +22,7 @@ const Table: React.FC<Props> = ({ products }) => {
             <th>Category</th>
             <th>Price</th>
             <th>Active</th>
-            <th>Action</th>
+            <th className="w-60">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -54,24 +54,25 @@ const Table: React.FC<Props> = ({ products }) => {
                   </div>
                 </td>
                 <td>
-                  <div className="flex gap-2  *:border *:border-gray-300 *:rounded-md *:p-2 *:text-gray-400 ">
+                  <div className="flex gap-2  *:rounded-lg *:shadow-sm *:p-2">
                     <Link
-                      to="#"
-                      className="hover:bg-sky-500 hover:text-white hover:border-sky-500"
+                      to={"/product/"+p.id}
+                      key={p.id}
+                      className="bg-gray-50 text-gray-500 hover:border-blue-500 hover:text-white hover:bg-blue-500 hover:shadow-md "
                     >
-                      <ViewIcon size={20} />
+                      <ViewIcon size={22} />
                     </Link>
                     <Link
                       to="#"
-                      className="hover:bg-yellow-500 hover:text-white hover:border-yellow-500"
+                      className="bg-gray-50 text-gray-500  hover:border-yellow-500 hover:text-white hover:bg-yellow-500 hover:shadow-md "
                     >
-                      <PencilEdit02Icon size={20} />
+                      <PencilEdit02Icon size={22} />
                     </Link>
                     <Link
                       to="#"
-                      className="hover:bg-red-500 hover:text-white hover:border-red-500"
+                      className="bg-gray-50 text-gray-500  hover:border-red-500 hover:text-white hover:bg-red-500 hover:shadow-md focus:text-inherit"
                     >
-                      <Delete02Icon size={20} />
+                      <Delete02Icon size={22} />
                     </Link>
                   </div>
                 </td>

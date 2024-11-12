@@ -7,7 +7,7 @@ import {
 import { Controller } from "react-hook-form";
 import { ArrowRight01Icon } from "hugeicons-react";
 import MaintenanceHeader from "./MaintenanceHeader";
-import AddIcon from "../assets/icons/Add";
+import AddIcon from "../assets/hugeIcons/Add";
 import { Link, redirect } from "react-router-dom";
 import InputContainer from "./InputContainer";
 import DragAndDropFileInput from "./DragAndDropFileInput";

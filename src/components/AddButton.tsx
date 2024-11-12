@@ -1,4 +1,4 @@
-import AddIcon from "../assets/icons/Add";
+import AddIcon from "../assets/hugeIcons/Add";
 import { Link } from "react-router-dom";
 interface Props {
   text: string;

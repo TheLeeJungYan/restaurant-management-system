@@ -4,7 +4,7 @@ import Products from "./pages/Products/index";
 import ProductsCreate from "./pages/Products/create";
 import Login from "./pages/Authentication/Login";
 import PrivateRoute from "./route/PrivateRoute";
-
+import ProductView from "./pages/Products/view"
 
 
 
@@ -26,8 +26,11 @@ export const router = createBrowserRouter([
       {
         path: "/product/create",
         element: <ProductsCreate />,
-       
       },
+      {
+        path:"/product/:id",
+        element:<ProductView/>
+      }
     ],
   },
   {

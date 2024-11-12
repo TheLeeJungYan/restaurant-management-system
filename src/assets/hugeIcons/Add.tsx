@@ -1,9 +1,6 @@
-interface Props {
-  size: number;
-  color: string;
-}
+import { hugeIconProps } from "../../Types/type"
 
-const Add: React.FC<Props> = ({ size, color }) => {
+const Add: React.FC<hugeIconProps> = ({ size, color }) => {
   return (
     <svg
       width={size}

@@ -11,7 +11,7 @@ import {
   Money03Icon,
 } from "hugeicons-react";
 import "../css/optionTable.css";
-import SuccessIcon from "../assets/icons/Success";
+import SuccessIcon from "../assets/hugeIcons/Success";
 import {
   Control,
   FieldErrors,

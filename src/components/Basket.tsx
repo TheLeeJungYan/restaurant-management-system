@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import CustomerIcon from "../assets/icons/Customer";
-import TableIcon from "../assets/icons/Table";
+import CustomerIcon from "../assets/hugeIcons/Customer";
+import TableIcon from "../assets/hugeIcons/Table";
 import { ProductContext } from "../context/ProductContext";
 import { Cancel01Icon } from "hugeicons-react";
 import Counter from "../components/Counter";

@@ -1,5 +1,5 @@
 import { InformationCircleIcon } from "hugeicons-react";
-import AddIcon from "../assets/icons/Add";
+import AddIcon from "../assets/hugeIcons/Add";
 import React, { useContext } from "react";
 import { AddProductContext } from "../context/AddProductContext";
 interface Options {

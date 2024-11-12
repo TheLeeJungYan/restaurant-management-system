@@ -2,7 +2,7 @@
 import {
     Cancel01Icon
 } from "hugeicons-react"
-import Success from "../assets/icons/Success";
+import Success from "../assets/hugeIcons/Success";
 const SuccessMsg:React.FC<{msg:string|null}> = ({msg}) =>{
     return (
         <div className={`flex bg-white rounded-xl mb-2 font-poppins  bg-green-200/50 items-center transition-all duration-1000 overflow-hidden ${msg?' border h-20 opacity-1':'h-0 opacity-0'}`}>

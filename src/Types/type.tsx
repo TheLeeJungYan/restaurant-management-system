@@ -80,3 +80,10 @@ export interface Products{
   created_at:string;
   image_url:string;
 }
+
+export interface hugeIconProps{
+  size: number;
+  color?: string;
+  id?:string
+
+}

@@ -71,6 +71,7 @@ export interface Inputs {
   optionGroups: [] | OptionsGrp[];
 }
 
+
 export interface Products{
   id:number;
   name:string;
@@ -81,9 +82,21 @@ export interface Products{
   image_url:string;
 }
 
+
 export interface hugeIconProps{
   size: number;
   color?: string;
   id?:string
-
 }
+
+export interface ViewOptions{
+  option:string;
+  description:string;
+  price:number;
+  default:boolean;
+}
+export interface ViewOptionGroups{
+  name:string;
+  options: ViewOptions[]
+}
+

@@ -35,43 +35,39 @@ const AddProductContent: React.FC = () => {
   const { register, handleSubmit, errors, setValue, control } = context;
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setUploading(true);
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    FlashState.set('product-success-msg',`${data.name} has created successfully!`);
-    setUploading(false);
-    navigate("/products");
-    // const formData = new FormData();
-    // formData.append("name", data.name);
-    // formData.append("description", data.description);
-    // formData.append("category", data.category.toString());
-    // formData.append("price", data.price.toString());
-    // if (data.image === undefined) return;
-    // formData.append("file", data.image, data.image.name);
-    // if (data.optionGroups.length > 0) {
-    //   data.optionGroups.forEach((group) => {
-    //     formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
-    //   });
-    // }
+   
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("category", data.category.toString());
+    formData.append("price", data.price.toString());
+    if (data.image === undefined) return;
+    formData.append("file", data.image, data.image.name);
+    if (data.optionGroups.length > 0) {
+      data.optionGroups.forEach((group) => {
+        formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
+      });
+    }
 
-    // try {
-    //   const response = await axios.post(
-    //     `${BASE_URL}/product/create`,
-    //     formData,
-    //     {
-    //       headers: { 
-    //          "content-type": "multipart/form-data", 
-    //            "Authorization" : `Bearer ${token}`
-    //        },
-    //     }
-    //   );
-    //   setUploading(false);
-    //   console.log(response);
-    //   navigate("/products");
-    //   FlashState.set('product-success-msg',`${data.name} has created successfully!`);
-    // } catch (e) {
-    //   console.error(e);
-    // }finally{
-    //   setUploading(false);
-    // }
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/product/create`,
+        formData,
+        {
+          headers: { 
+             "content-type": "multipart/form-data", 
+               "Authorization" : `Bearer ${token}`
+           },
+        }
+      );
+      console.log(response);
+      FlashState.set('product-success-msg',`${data.name} has created successfully!`);
+      navigate("/products");
+    } catch (e) {
+      console.error(e);
+    }finally{
+      setUploading(false);
+    }
   };
   return (
     <>
@@ -90,11 +86,11 @@ const AddProductContent: React.FC = () => {
         <div className="flex-1 flex flex-col py-10 px-10">
           <Link
             to="/products"
-            className="text-gray-900 bg-white w-fit py-3 px-3 rounded-md border hover:text-gray-600"
+            className="flex gap-1.5 hover:no-underline hover:text-gray-500 text-gray-400 font-poppins items-center"
           >
-            <ArrowLeft02Icon size={20} className="text-gray-500" />
+            <span className="text-lg">⟵</span><span className="">Back to product</span>
           </Link>
-          <div className="flex justify-between mt-5">
+          <div className="flex justify-between mt-2">
             <div className="flex flex-col">
               <span className="font-inters font-semibold text-3xl">
                 Add New Product

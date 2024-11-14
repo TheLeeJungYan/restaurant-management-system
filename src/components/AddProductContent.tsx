@@ -83,19 +83,19 @@ const AddProductContent: React.FC = () => {
             <span>Add New Product</span>
           </div>
         </MaintenanceHeader>
-        <div className="flex-1 flex flex-col py-10 px-10">
+        <div className="flex-1 flex flex-col py-10 2xl:px-40">
           <Link
             to="/products"
             className="flex gap-1.5 hover:no-underline hover:text-gray-500 text-gray-400 font-poppins items-center"
           >
             <span className="text-lg">⟵</span><span className="">Back to product</span>
           </Link>
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-5">
             <div className="flex flex-col">
               <span className="font-inters font-semibold text-3xl">
                 Add New Product
               </span>
-              <span className="font-poppins text-gray-500 mt-2 text-xs">
+              <span className="font-poppins text-gray-400 mt-2 text-xs">
                 This is the page where you can create a new product. Fill in the
                 required details such as the product name, description, price,
                 and etc...
@@ -113,38 +113,25 @@ const AddProductContent: React.FC = () => {
           </div>
 
           <div className="flex flex-1 gap-5 mt-5">
-            <div className="flex flex-col flex-1 gap-5">
-              <InputContainer title={"Basic Information"}>
-                <input
-                  {...register("name", {
-                    required: "Product Name is required",
-                  })}
-                  type="text"
-                  placeholder="Product Name"
-                  className={`font-poppins px-4 py-3 border rounded-lg shadow-sm outline-0 ${
-                    errors.name && "border-primaryColor"
-                  }`}
+          <div className="flex flex-col basis-1/3 gap-5 ">
+          <InputContainer title={"Product Image"}>
+                <Controller
+                  name="image"
+                  control={control}
+                  rules={{ required: "Image is required" }}
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <DragAndDropFileInput
+                        errors={errors}
+                        value={value}
+                        onChange={(files: File | null) => {
+                          onChange(files);
+                        }}
+                      />
+                    );
+                  }}
                 />
-                {errors.name && <ErrorText text={errors.name.message} />}
-                <textarea
-                  {...register("description", {
-                    required: "Description is required",
-                  })}
-                  rows={15}
-                  placeholder="Descriptions"
-                  className={`font-poppins px-4 py-3 border rounded-lg shadow-sm outline-0 mt-5 ${
-                    errors.description && "border-primaryColor"
-                  }`}
-                ></textarea>
-                {errors.description && (
-                  <ErrorText text={errors.description.message} />
-                )}
               </InputContainer>
-              <InputContainer title={"Product Options"} productOption={true}>
-                <ProductOptionsGroup />
-              </InputContainer>
-            </div>
-            <div className="flex flex-col basis-1/3 gap-5 ">
               <InputContainer title={"Category"}>
                 <select
                   {...register("category", {
@@ -169,26 +156,9 @@ const AddProductContent: React.FC = () => {
                   </div>
                 </Link>
               </InputContainer>
-              <InputContainer title={"Product Image"}>
-                <Controller
-                  name="image"
-                  control={control}
-                  rules={{ required: "Image is required" }}
-                  render={({ field: { value, onChange } }) => {
-                    return (
-                      <DragAndDropFileInput
-                        errors={errors}
-                        value={value}
-                        onChange={(files: File | null) => {
-                          onChange(files);
-                        }}
-                      />
-                    );
-                  }}
-                />
-              </InputContainer>
+           
 
-              <div className="bg-white rounded-md py-6 px-8 flex flex-col border">
+              <div className="bg-white rounded-xl py-6 px-8 flex flex-col border shadow-sm  ">
                 <span className="font-inter font-bold text-md">Pricing</span>
                 <div className="mt-5 flex flex-col">
                   <label
@@ -248,6 +218,38 @@ const AddProductContent: React.FC = () => {
                 </div>
               </div>
             </div>
+            <div className="flex flex-col flex-1 gap-5">
+              <InputContainer title={"General Information"}>
+                <input
+                  {...register("name", {
+                    required: "Product Name is required",
+                  })}
+                  type="text"
+                  placeholder="Product Name"
+                  className={`font-poppins px-4 py-3 border rounded-lg shadow-sm outline-0 ${
+                    errors.name && "border-primaryColor"
+                  }`}
+                />
+                {errors.name && <ErrorText text={errors.name.message} />}
+                <textarea
+                  {...register("description", {
+                    required: "Description is required",
+                  })}
+                  rows={15}
+                  placeholder="Descriptions"
+                  className={`font-poppins px-4 py-3 border rounded-lg shadow-sm outline-0 mt-5 ${
+                    errors.description && "border-primaryColor"
+                  }`}
+                ></textarea>
+                {errors.description && (
+                  <ErrorText text={errors.description.message} />
+                )}
+              </InputContainer>
+              <InputContainer title={"Product Options"} productOption={true}>
+                <ProductOptionsGroup />
+              </InputContainer>
+            </div>
+          
           </div>
         </div>
       </form>

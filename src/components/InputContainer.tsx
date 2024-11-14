@@ -28,7 +28,7 @@ const InputContainer: React.FC<Props> = ({
     });
   };
   return (
-    <div className="bg-white rounded-md py-6 px-8 flex flex-col border">
+    <div className="bg-white rounded-xl shadow-sm py-6 px-8 flex flex-col border">
       <div className="flex items-center justify-between">
         <div className="font-inter font-bold text-md relative text-gray-700">
           {title}

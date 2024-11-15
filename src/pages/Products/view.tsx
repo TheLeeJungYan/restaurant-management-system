@@ -27,8 +27,9 @@ const ProductView:React.FC = ()=>{
                 }
               });
               setProduct(response.data.data.product);
-              console.log(response.data.data.options);
               setOptionGroups(response.data.data.options);
+           
+    
               setFetching(false);
         }catch(e){
             console.error(e);
@@ -58,9 +59,7 @@ const ProductView:React.FC = ()=>{
             className="flex gap-1.5 hover:no-underline hover:text-gray-500 text-gray-400 font-poppins items-center"
           >  <span className="text-lg">⟵</span><span >Back to product</span></Link>
           <div className="flex flex-1 flex-col mt-5">
-            <span className="font-inters font-semibold text-3xl tracking-wider">
-                {product?.name}
-            </span>
+          
             <div className="flex-1 mt-5 flex gap-5">
               <div className="flex flex-col basis-1/3 gap-5">
                 <img src={product?.image_url} alt="" className="rounded-lg shadow-md" />
@@ -69,22 +68,21 @@ const ProductView:React.FC = ()=>{
                   <div className="mt-4 font-poppins text-gray-500">{product?.description}</div>
                 </div>
               </div>
-              <div className="flex-1 rounded-md py-2 px-10">
-                <div className="flex gap-2 items-end">
-                  <div className="text-6xl font-poppins font-semibold">RM <span className="font-inter font-normal">{product?.price}</span></div><div className="bg-gray-200 px-3 py-1 rounded-md font-poppins">Price</div>
-                </div>
-                <div className="mt-5 rounded-md font-poppins bg-gray-200 w-fit px-2 py-2">
-                  {product?.category}
-                </div>
-                <div className="mt-5 rounded-md border-t">
-                  <div className="font-poppins font-bold mt-4">Product Options :</div>
+              <div className="flex-1 rounded-md  px-10">
+                <span className="font-inters font-semibold text-7xl tracking-wider">
+                  {product?.name}
+                </span>
+                <div className="bg-white rounded-md w-fit mt-5 px-4 py-2 font-poppins border">Main Dish</div>
+                <div className="font-sans mt-8 text-3xl font-semibold text-gray-800">RM {product?.price}<span className="text-gray-500">.00</span></div>
+                {/* <div className="mt-5 rounded-md border-t">
+                  <div className="font-inters font-bold mt-4">Product Options :</div>
                   <div className="flex flex-col mt-5 gap-4">
                   {
                       optionGroups && 
                       optionGroups.map((group,index)=>(
                         <div key={index} className="flex flex-col">
-                          <div className="flex items-center gap-2  *:py-2 border border-gray-300 rounded-lg overflow-hidden bg-gray-200 text-gray-600">
-                            <div className="flex items-center justify-center font-bold border-r border-gray-300 px-4">{index+1}</div>
+                          <div className="flex items-center gap-2  *:py-2 border border-gray-200 rounded-lg overflow-hidden bg-white text-gray-600">
+                            <div className="flex items-center justify-center font-bold border-r border-gray-200 px-4">{index+1}</div>
                             <div className="font-inter font-bold pl-2">{group.name}</div>
                             <button className={`ml-auto px-2 ${expandedGroups[index] ? 'rotate-180' : ''}`} onClick={() => setExpandedGroups(prev => ({
                                 ...prev, 
@@ -92,8 +90,8 @@ const ProductView:React.FC = ()=>{
                             }))} ><ArrowDown01Icon size={18}/></button>
                           </div>
                           <div className={`flex-col ${expandedGroups[index] ? 'flex bg-white mt-2 rounded-xl overflow-hidden border' : 'hidden'}`}>
-                            <table className="mt-10">
-                              <thead className="*:bg-gray-200  *:py-3 *:px-10 *:text-left">
+                            <table className="">
+                              <thead className="*:py-2 *:pb-2 *:px-10 *:text-left *:border-b *:bg-slate-50">
                                 <th className="">Options</th>
                                 <th className="">Description</th>
                                 <th className="">Price</th>
@@ -102,11 +100,11 @@ const ProductView:React.FC = ()=>{
                               { group.options && group.options.map((option,index)=>(
                                 <tr key={index} className="*:py-2 *:px-10 *:bg-white">
                                     <td className="">
-                                      <div className={`ml-3 px-4 py-2 font-inter font-semibold w-fit rounded-md border ${option.default?'bg-green-500 text-white shadow-md shadow-green-500/50 border-green-500':'bg-gray-100 text-gray-700 shadow-sm'}`}>
+                                      <div className={`ml-3 px-3 py-1 font-inter font-semibold w-fit rounded-xl border ${option.default?'bg-green-500 text-white shadow-md shadow-green-500/20 border-green-500':'bg-gray-100 text-gray-700 shadow-sm'}`}>
                                       {option.option}
                                       </div>
                                     </td>
-                                    <td>{option.description}</td>
+                                    <td className="font-poppins">{option.description}</td>
                                     <td>RM<span className="font-poppins"> {option.price}</span></td>
                                 </tr>
                             ))}
@@ -118,7 +116,7 @@ const ProductView:React.FC = ()=>{
                       ))
                     }
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

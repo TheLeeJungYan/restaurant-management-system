@@ -2,10 +2,10 @@
   font-weight: 400;
 }
 
-table tbody tr:not(:last-child) {
+#productTable tbody tr:not(:last-child) {
   border-bottom: 1px solid #e5e7eb;
 }
-table tbody tr > *:first-child,
-table thead tr > *:first-child {
+#productTable tbody tr > *:first-child,
+#productTable thead tr > *:first-child {
   padding-left: 1.5rem;
 }

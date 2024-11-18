@@ -100,3 +100,8 @@ export interface ViewOptionGroups{
   options: ViewOptions[]
 }
 
+export interface DeleteProduct{
+  id:number;
+  name:string;
+}
+

@@ -27,6 +27,7 @@ const ProductIndex: React.FC = () => {
   const [deleteModalShow,setDeleteModalShow] =useState<boolean>(false);
   const [deleteProduct,setDeleteProduct] = useState<null| DeleteProduct>(null);
   const [successMessage,setSuccessMessage] = useState<null | string>(null);
+  const [deleting,setDeleting] = useState<boolean>(false);
   useEffect(()=>{
     fetchProduct();
   },[])
@@ -55,12 +56,23 @@ const ProductIndex: React.FC = () => {
     }
   }
   
-  const deleteAction:(id:number,name:string)=>void=(id,name)=>{
+  const openDeleteModal:(id:number,name:string)=>void=(id,name)=>{
     setDeleteModalShow(true);
     setDeleteProduct({
       id,name
     });
-  
+  }
+
+  const closeDeleteModal:() => void = ()=>{
+    setDeleteModalShow(false);
+    setDeleteProduct(null);
+  }
+
+  const deleteAction:() => void = () =>{
+    setDeleting(true);
+    setTimeout(() => {
+      setDeleting(false);
+    }, 5000);
   }
   return (
     <AuthLayout>
@@ -68,13 +80,13 @@ const ProductIndex: React.FC = () => {
         <div className="bg-white flex flex-col rounded-md font-poppins overflow-hidden min-w-96 relative shadow-md border border-gray-500">
           <div className="font-inters font-semibold flex justify-between px-5 py-3 border-b border-gray-300">
             <div className="flex items-center gap-3"><div className="relative" style={{top:'1.5px'}}>Are you sure ?</div></div>
-            <button className="h-fit"><CloseIcon  size={15} color={"rgb(209 213 219)"}/></button>
+            <button className="h-fit" onClick={()=>closeDeleteModal()} disabled={deleting}><CloseIcon  size={15} color={"rgb(209 213 219)"}/></button>
           </div>
           <div className="flex flex-col py-3 px-5">
             <div className="max-w-96">This action <b>CANNOT</b> be undone. This will permanently delete the <span className="font-bold">{deleteProduct?.name}</span> !</div>
             <div className="mt-5 flex justify-end gap-2 *:font-semibold font-inters">
-              <button className="bg-gray-200 px-4 py-2 rounded-md text-gray-600">No, Keep it.</button>
-              <button className="bg-red-500 px-4 py-2 rounded-md text-white">Yes, Delete it!</button>
+              <button className={`${deleting?'bg-gray-200 text-gray-400':'bg-gray-200 text-gray-600'} px-4 py-2 rounded-md  w-32`} disabled={deleting} onClick={()=>closeDeleteModal()}>No, Keep it.</button>
+              <button className={`${deleting?'bg-red-400':'bg-red-500'} px-4 py-2 rounded-md text-white w-32 flex items-center justify-center`} disabled={deleting} onClick={()=>deleteAction()}>{deleting?<div className="loaderDlt"></div>:'Yes, Delete it!'}</button>
             </div>
           </div>
         </div>
@@ -113,7 +125,7 @@ const ProductIndex: React.FC = () => {
             </div>
           </div>
         </div>
-        <Table products={products} deleteAction={deleteAction}/>
+        <Table products={products} openDeleteModal={openDeleteModal}/>
       </div>
     </AuthLayout>
   );

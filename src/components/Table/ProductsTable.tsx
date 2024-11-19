@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { Products } from "../../Types/type"
 interface Props {
   products: Products[];
-  deleteAction:(id:number,name:string)=>void
+  openDeleteModal:(id:number,name:string)=>void
 }
-const Table: React.FC<Props> = ({ products,deleteAction }) => {
+const Table: React.FC<Props> = ({ products,openDeleteModal }) => {
 
   return (
     <div
@@ -71,7 +71,7 @@ const Table: React.FC<Props> = ({ products,deleteAction }) => {
                     </Link>
                     <button
                       className="bg-gray-50 text-gray-500  hover:border-red-500 hover:text-white hover:bg-red-500 hover:shadow-md"
-                      onClick={()=>deleteAction(p.id,p.name)}
+                      onClick={()=>openDeleteModal(p.id,p.name)}
                     >
                       <Delete02Icon size={22} />
                     </button>

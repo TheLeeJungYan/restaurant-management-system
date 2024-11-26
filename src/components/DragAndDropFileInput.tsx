@@ -1,5 +1,5 @@
 import { Image02Icon, ImageUploadIcon } from "hugeicons-react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import React from "react";
 import {
   FieldError,
@@ -8,6 +8,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { FieldErrors } from "react-hook-form";
+import { ManageProductContext } from "../context/ManageProductContext";
 interface Options {
   option: string;
   desc: string;
@@ -34,11 +35,24 @@ interface Props {
 }
 
 const DragAndDropFileInput: React.FC<Props> = ({ value, onChange, errors }) => {
+  const manageProductContext = useContext(ManageProductContext);
+  if(manageProductContext == undefined) return;
+  const { image_url, image, image_name } = manageProductContext;
+
+ 
   const [overlayShow, setOverlayShow] = useState<boolean>(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [imageName, setImageName] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(image_url??null);
+  const [imageName, setImageName] = useState<string | null>(image_name);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  useEffect(()=>{
+    if(inputRef.current && image){
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(image); // Add file to DataTransfer
+      inputRef.current.files = dataTransfer.files; // Set input's file
+      // inputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  },[])
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
   const acceptedTypes: string[] = ["image/jpeg", "image/png", "image/jpg"];
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {

@@ -57,14 +57,14 @@ const Table: React.FC<Props> = ({ products,openDeleteModal }) => {
                 <td>
                   <div className="flex gap-2  *:rounded-lg *:shadow-sm *:p-2">
                     <Link
-                      to={"/product/"+p.id}
+                      to={"/product/view/"+p.id}
                       key={p.id}
                       className="bg-gray-50 text-gray-500 hover:border-blue-500 hover:text-white hover:bg-blue-500 hover:shadow-md "
                     >
                       <ViewIcon size={22} />
                     </Link>
                     <Link
-                      to="#"
+                      to={"/product/edit/"+p.id}
                       className="bg-gray-50 text-gray-500  hover:border-yellow-500 hover:text-white hover:bg-yellow-500 hover:shadow-md "
                     >
                       <PencilEdit02Icon size={22} />

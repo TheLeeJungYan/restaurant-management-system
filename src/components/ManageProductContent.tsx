@@ -1,5 +1,5 @@
 import {
-  ArrowLeft02Icon,
+  UploadCircle01Icon,
   CodesandboxIcon,
   Settings03Icon,
   Tick02Icon,
@@ -13,7 +13,7 @@ import InputContainer from "./InputContainer";
 import DragAndDropFileInput from "./DragAndDropFileInput";
 import ProductOptionsGroup from "./ProductOptionsGroup";
 import { useContext, useState } from "react";
-import { AddProductContext } from "../context/AddProductContext";
+import { ManageProductContext } from "../context/ManageProductContext";
 import { SubmitHandler } from "react-hook-form";
 import ErrorText from "./ErrorText";
 import axios from "axios";
@@ -24,18 +24,19 @@ import Loader from "./Loader";
 import { Inputs } from "../Types/type";
 import { useNavigate } from 'react-router-dom'; 
 import FlashState  from "../FlashState";
-const AddProductContent: React.FC = () => {
+const ManageProductContent: React.FC = () => {
   const [uploading,setUploading] = useState<boolean>(false);
-  const context = useContext(AddProductContext);
+  const context = useContext(ManageProductContext);
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   if (context == undefined || authContext ==undefined) return;
  
   const { token } = authContext;
-  const { register, handleSubmit, errors, setValue, control } = context;
+  const { register, handleSubmit, errors, edit, control, productId } = context;
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    
     setUploading(true);
-   
+    
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
@@ -48,7 +49,27 @@ const AddProductContent: React.FC = () => {
         formData.append("optionGroups", JSON.stringify(group)); // Serialize as JSON string
       });
     }
-
+    if(edit){
+      try{
+        const response = await axios.put(
+          `${BASE_URL}/product/${productId}`,
+          formData,
+          {
+            headers: { 
+               "content-type": "multipart/form-data", 
+                 "Authorization" : `Bearer ${token}`
+             },
+          }
+        );
+        FlashState.set('product-success-msg',`${data.name} has updated successfully!`);
+        navigate("/products");
+      }catch(e){
+        console.error(e);
+      }finally{
+        setUploading(false);
+      }
+      return;
+    }
     try {
       const response = await axios.post(
         `${BASE_URL}/product/create`,
@@ -93,12 +114,13 @@ const AddProductContent: React.FC = () => {
           <div className="flex justify-between mt-5">
             <div className="flex flex-col">
               <span className="font-inters font-semibold text-3xl">
-                Add New Product
+                {edit? 'Edit Product': 'Add New Product'}
               </span>
               <span className="font-poppins text-gray-400 mt-2 text-xs">
-                This is the page where you can create a new product. Fill in the
-                required details such as the product name, description, price,
-                and etc...
+                {
+                  edit? `This is the page where you can update an existing product. Edit the required details such as the product name, description, price, etc., and save your changes`
+                    :`This is the page where you can create a new product. Fill in the required details such as the product name, description, price, and etc...`
+                }
               </span>
             </div>
             <button
@@ -106,9 +128,9 @@ const AddProductContent: React.FC = () => {
               className="focus:ring focus:ring-green-500 focus:ring-offset-0 focus:ring-opacity-50 font-inter text-md items-center bg-green-600 px-3 text-white border h-fit *:py-2  rounded-md flex gap-2"
             >
               <div>
-                <Tick02Icon size={20} />
+                {edit? <UploadCircle01Icon size={20}/> : <Tick02Icon size={20} />}
               </div>
-              <div>Add Product</div>
+              <div>{edit ? 'Update' : 'Add'} Product</div>
             </button>
           </div>
 
@@ -257,4 +279,4 @@ const AddProductContent: React.FC = () => {
   );
 };
 
-export default AddProductContent;
+export default ManageProductContent;

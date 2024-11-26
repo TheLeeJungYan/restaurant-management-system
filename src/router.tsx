@@ -5,7 +5,7 @@ import ProductsCreate from "./pages/Products/create";
 import Login from "./pages/Authentication/Login";
 import PrivateRoute from "./route/PrivateRoute";
 import ProductView from "./pages/Products/view"
-
+import ProductEdit from "./pages/Products/edit"
 
 
 export const router = createBrowserRouter([
@@ -28,8 +28,11 @@ export const router = createBrowserRouter([
         element: <ProductsCreate />,
       },
       {
-        path:"/product/:id",
+        path:"/product/view/:id",
         element:<ProductView/>
+      },{
+        path:"/product/edit/:id",
+        element:<ProductEdit/>
       }
     ],
   },

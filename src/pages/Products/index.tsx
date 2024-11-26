@@ -22,23 +22,37 @@ import { Products,DeleteProduct } from "../../Types/type";
 import SuccessMsg from "../../components/SuccessMsg";
 import FlashState from "../../FlashState";
 import CloseIcon from "../../assets/hugeIcons/Close";
+import { useNavigate } from "react-router-dom";
+
 const ProductIndex: React.FC = () => {
+  const navigate = useNavigate();
   const [products,setProducts] = useState<Products[] | []>([]);
   const [deleteModalShow,setDeleteModalShow] =useState<boolean>(false);
   const [deleteProduct,setDeleteProduct] = useState<null| DeleteProduct>(null);
   const [successMessage,setSuccessMessage] = useState<null | string>(null);
   const [deleting,setDeleting] = useState<boolean>(false);
-  useEffect(()=>{
-    fetchProduct();
-  },[])
+  const [shouldRefresh,setShouldRefresh] = useState<boolean>(true);
+
 
   useEffect(()=>{
-    console.log('succ msg:'+successMessage);
-  },[successMessage]);
+    if(shouldRefresh){
+      if(deleting){
+        FlashState.set('product-success-msg',`${deleteProduct?.name} has deleted successfully!`);
+        setDeleting(false);
+        setDeleteModalShow(false);
+        setDeleteProduct(null);
+      }
+      fetchProduct();
+      console.log('refresh');
+      setShouldRefresh(false);
+    }
+  },[shouldRefresh]);
+  
   const authContext = useContext(AuthContext);
   if(authContext == undefined) return ;
   const { token } = authContext;
   const fetchProduct = async() =>{
+
     try{
       const response = await axios.get(`${BASE_URL}/products`,{
         headers:{
@@ -68,11 +82,19 @@ const ProductIndex: React.FC = () => {
     setDeleteProduct(null);
   }
 
-  const deleteAction:() => void = () =>{
+  const deleteAction:() => void = async () =>{
+    
+    console.log(deleteProduct);
     setDeleting(true);
-    setTimeout(() => {
+    try{
+      const response = await axios.delete(`${BASE_URL}/product/${deleteProduct?.id}`,{ headers: { Authorization : `Bearer ${token}`}});
+      console.log(response);
+      setShouldRefresh(true);
+      
+    }catch(error){
       setDeleting(false);
-    }, 5000);
+      console.error(error);
+    }
   }
   return (
     <AuthLayout>

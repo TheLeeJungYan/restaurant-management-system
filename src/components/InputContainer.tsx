@@ -1,7 +1,7 @@
 import { InformationCircleIcon } from "hugeicons-react";
 import AddIcon from "../assets/hugeIcons/Add";
 import React, { useContext } from "react";
-import { AddProductContext } from "../context/AddProductContext";
+import { ManageProductContext } from "../context/ManageProductContext";
 interface Options {
   name: string;
   seq: number;
@@ -16,9 +16,9 @@ const InputContainer: React.FC<Props> = ({
   title,
   productOption,
 }) => {
-  const addProductContext = useContext(AddProductContext);
-  if (addProductContext == undefined) return;
-  const { appendOptionGroup } = addProductContext;
+  const manageProductContext = useContext(ManageProductContext);
+  if (manageProductContext == undefined) return;
+  const { appendOptionGroup } = manageProductContext;
   const addOptionGroup: () => void = () => {
     appendOptionGroup({
       name: "",

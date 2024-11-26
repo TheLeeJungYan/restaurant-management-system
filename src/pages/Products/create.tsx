@@ -1,11 +1,11 @@
 
 import AuthLayout from "../../layouts/AuthLayout";
-import AddProductProvider from "../../context/AddProductContext";
-import AddProductContent from "../../components/AddProductContent";
+import AddProductProvider from "../../context/ManageProductContext";
+import AddProductContent from "../../components/ManageProductContent";
 const ProductCreate: React.FC = () => {
   return (
     <AuthLayout>
-      <AddProductProvider>
+      <AddProductProvider product={null} optionGrps={null}>
         <AddProductContent/>
       </AddProductProvider>
     </AuthLayout>

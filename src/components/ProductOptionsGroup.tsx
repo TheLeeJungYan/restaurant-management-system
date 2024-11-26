@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AddProductContext } from "../context/AddProductContext";
+import { ManageProductContext } from "../context/ManageProductContext";
 import OptionInputContainer from "./OptionInputContainer";
 import {
   ArrowDown01Icon,
@@ -39,6 +39,9 @@ const ProductOptions: React.FC<{
     control,
   });
 
+  const context = useContext(ManageProductContext);
+  if(context == undefined) return;
+  const { getValues,setValue } = context;
   // Move useFieldArray outside of the conditional check
   return (
     <table id="productOptionTable" className="w-full">
@@ -226,6 +229,10 @@ const ProductOptions: React.FC<{
                   <button
                     type="button"
                     onClick={() => {
+                      if(getValues(`optionGroups.${ogIndex}.default`) == oIndex.toString()){
+                        setValue(`optionGroups.${ogIndex}.default`,"0");
+                      }
+                    
                       removeOption(oIndex);
                     }}
                     className="flex items-center mx-auto justify-center border-primaryColor rounded-md w-7 h-7 bg-primaryColor text-white"
@@ -296,10 +303,10 @@ const CollapsibleTable: React.FC<{
   );
 };
 const ProductOptionsGroup: React.FC = () => {
-  const addProductContext = useContext(AddProductContext);
-  if (addProductContext == undefined) return;
+  const manageProductContext = useContext(ManageProductContext);
+  if (manageProductContext == undefined) return;
   const { register, optionGroupFields, removeOptionGroup, errors, control } =
-    addProductContext;
+  manageProductContext;
 
   return (
     <div className="flex flex-col gap-5 font-poppins">

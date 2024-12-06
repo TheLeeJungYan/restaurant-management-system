@@ -7,7 +7,7 @@ const SuccessMsg: React.FC<{ msg: string | null }> = ({ msg }) => {
   useEffect(() => {
     if (msg) {
       setMessage(msg);
-      timer.current = setTimeout(() => {
+      timer.current = window.setTimeout(() => {
         setMessage(null);
       }, 5000);
 

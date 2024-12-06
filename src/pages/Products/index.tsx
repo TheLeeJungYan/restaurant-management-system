@@ -11,7 +11,7 @@ import {
 
 import AddButton from "../../components/AddButton";
 import SearchBar from "../../components/SearchBar2";
-import Button from "../../components/Button";
+// import Button from "../../components/Button";
 import Table from "../../components/Table/ProductsTable";
 import MaintenanceHeader from "../../components/MaintenanceHeader";
 import axios from "axios";
@@ -22,8 +22,8 @@ import { Products, DeleteProduct } from "../../Types/type";
 import SuccessMsg from "../../components/SuccessMsg";
 import FlashState from "../../FlashState";
 import CloseIcon from "../../assets/hugeIcons/Close";
-import { redirect, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 const ProductIndex: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Products[] | []>([]);
@@ -63,7 +63,7 @@ const ProductIndex: React.FC = () => {
         },
       });
       setProducts(response.data.data);
-      FlashState.set("product-success-msg", `test has updated successfully!`);
+
       const flashMessage = FlashState.get("product-success-msg");
       if (flashMessage) {
         setSuccessMessage(flashMessage);
@@ -167,7 +167,10 @@ const ProductIndex: React.FC = () => {
 
       <div className="flex-1 flex flex-col py-10 px-10">
         <SuccessMsg msg={successMessage} />
-        <div id="filter" className="bg-white py-5 rounded-xl border">
+        <div className="flex justify-end">
+          <Button>Button</Button>
+        </div>
+        {/* <div id="filter" className="bg-white py-5 rounded-xl border">
           <div className="flex px-5 ">
             <SearchBar />
 
@@ -196,8 +199,8 @@ const ProductIndex: React.FC = () => {
               ></AddButton>
             </div>
           </div>
-        </div>
-        <Table products={products} openDeleteModal={openDeleteModal} />
+        </div> */}
+        {/* <Table products={products} openDeleteModal={openDeleteModal} /> */}
       </div>
     </AuthLayout>
   );

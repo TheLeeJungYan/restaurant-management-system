@@ -1,28 +1,27 @@
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "@/layouts/AuthLayout";
 import {
   Settings03Icon,
   ArrowRight01Icon,
   CodesandboxIcon,
   CloudDownloadIcon,
   CloudUploadIcon,
-  FilterHorizontalIcon,
-  Alert01Icon,
 } from "hugeicons-react";
 
-import AddButton from "../../components/AddButton";
-import SearchBar from "../../components/SearchBar2";
-import Button from "../../components/Button";
-import Table from "../../components/Table/ProductsTable";
-import MaintenanceHeader from "../../components/MaintenanceHeader";
+import AddButton from "@/components/AddButton";
+import SearchBar from "@/components/SearchBar2";
+import Button from "@/components/Button";
+import MaintenanceHeader from "@/components/MaintenanceHeader";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { BASE_URL } from "../../config";
-import { Products, DeleteProduct } from "../../Types/type";
-import SuccessMsg from "../../components/SuccessMsg";
-import FlashState from "../../FlashState";
-import CloseIcon from "../../assets/hugeIcons/Close";
+import { AuthContext } from "@/context/AuthContext";
+import { BASE_URL } from "@/config";
+import { Products, DeleteProduct } from "@/Types/type";
+import SuccessMsg from "@/components/SuccessMsg";
+import FlashState from "@/FlashState";
+import CloseIcon from "@/assets/hugeIcons/Close";
 import { useNavigate } from "react-router-dom";
+import { columns } from "./columns";
+import { DataTable } from "./dataTable";
 
 const ProductIndex: React.FC = () => {
   const navigate = useNavigate();
@@ -62,6 +61,7 @@ const ProductIndex: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data.data);
       setProducts(response.data.data);
 
       const flashMessage = FlashState.get("product-success-msg");
@@ -73,14 +73,15 @@ const ProductIndex: React.FC = () => {
     }
   };
 
-  const openDeleteModal: (id: number, name: string) => void = (id, name) => {
+  const onDelete = (value: Products) => {
+    const id = value.id;
+    const name = value.name;
     setDeleteModalShow(true);
     setDeleteProduct({
       id,
       name,
     });
   };
-
   const closeDeleteModal: () => void = () => {
     setDeleteModalShow(false);
     setDeleteProduct(null);
@@ -101,6 +102,8 @@ const ProductIndex: React.FC = () => {
       console.error(error);
     }
   };
+
+  const productColumns = columns;
   return (
     <AuthLayout>
       {deleteModalShow && (
@@ -167,7 +170,6 @@ const ProductIndex: React.FC = () => {
 
       <div className="flex-1 flex flex-col py-10 px-10">
         <SuccessMsg msg={successMessage} />
-
         <div id="filter" className="bg-white py-5 rounded-xl border">
           <div className="flex px-5 ">
             <SearchBar />
@@ -176,12 +178,6 @@ const ProductIndex: React.FC = () => {
               id="buttonField"
               className="flex px-4 items-center gap-2 ml-auto"
             >
-              <Button
-                text={"filter"}
-                icon={<FilterHorizontalIcon size={16} />}
-                className="mr-4 text-white bg-slate-400"
-              />
-
               <Button
                 text={"import"}
                 icon={<CloudUploadIcon size={16} />}
@@ -198,7 +194,7 @@ const ProductIndex: React.FC = () => {
             </div>
           </div>
         </div>
-        <Table products={products} openDeleteModal={openDeleteModal} />
+        <DataTable columns={productColumns({ onDelete })} data={products} />
       </div>
     </AuthLayout>
   );

@@ -11,3 +11,11 @@
     --radius: 0.5rem;
   }
 }
+
+.font-geist {
+  font-family: "Geist Variable";
+}
+
+.font-geist-mono {
+  font-family: "Geist Mono Variable";
+}

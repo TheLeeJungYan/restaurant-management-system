@@ -7,6 +7,8 @@ import "./index.css";
 import "rsuite/dist/rsuite.min.css"; // or 'rsuite/styles/index.less';
 import { CustomProvider } from "rsuite";
 import AuthProvider from "./context/AuthContext.tsx";
+import "non.geist";
+import "non.geist/mono";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>

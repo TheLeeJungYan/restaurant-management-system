@@ -1,5 +1,12 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import AddButton from "@/components/AddButton";
+import SearchBar from "@/components/SearchBar2";
+import Button from "@/components/Button";
+import {
+  CloudDownloadIcon,
+  CloudUploadIcon,
+  Search01Icon,
+} from "hugeicons-react";
 import {
   ColumnDef,
   flexRender,
@@ -7,8 +14,10 @@ import {
   useReactTable,
   SortingState,
   getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
-
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -27,21 +36,56 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+    []
+  )
+  const [searchValue,setSearchValue] = useState<string>("");
+  useEffect(()=>{
+    table.setGlobalFilter(searchValue);
+  },[searchValue])
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
   return (
+    <>
+    <div id="filter" className="bg-white py-5 rounded-xl border">
+    <div className="flex px-5 ">
+    <SearchBar value={searchValue}  onChange={(e) => setSearchValue(e.target.value)} />
+     
+      <div
+        id="buttonField"
+        className="flex px-4 items-center gap-2 ml-auto"
+      >
+        <Button
+          text={"import"}
+          icon={<CloudUploadIcon size={16} />}
+          onClick={() => {
+            console.log("adad");
+            window.location.reload();
+          }}
+        />
+        <Button text={"export"} icon={<CloudDownloadIcon size={16} />} />
+        <AddButton
+          text={"Add Product"}
+          location={"/product/create"}
+        ></AddButton>
+      </div>
+    </div>
+  </div>
     <div className="mt-2 border rounded-xl bg-white overflow-hidden flex flex-col font-geist">
-      <div className="py-5"></div>
+      <div className="py-8"></div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -54,7 +98,7 @@ export function DataTable<TData, TValue>({
                   <TableHead
                     key={header.id}
                     className={`${
-                      header.id.includes("index") ? "px-5 py-4" : "px-4 py-4"
+                      header.id.includes("index") ? "px-4 py-4" : "px-4 py-4"
                     } ${header.id.includes("id") ? "w-60" : ""}`}
                   >
                     {header.isPlaceholder
@@ -80,7 +124,7 @@ export function DataTable<TData, TValue>({
                   <TableCell
                     key={cell.id}
                     className={`${
-                      cell.id.includes("index") ? "px-5 py-3" : "px-4 py-3"
+                      cell.id.includes("index") ? "px-9 py-3" : "px-4 py-3"
                     }`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -98,5 +142,6 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
+    </>
   );
 }

@@ -3,13 +3,9 @@ import {
   Settings03Icon,
   ArrowRight01Icon,
   CodesandboxIcon,
-  CloudDownloadIcon,
-  CloudUploadIcon,
 } from "hugeicons-react";
 
-import AddButton from "@/components/AddButton";
-import SearchBar from "@/components/SearchBar2";
-import Button from "@/components/Button";
+
 import MaintenanceHeader from "@/components/MaintenanceHeader";
 import axios from "axios";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -19,7 +15,6 @@ import { Products, DeleteProduct } from "@/Types/type";
 import SuccessMsg from "@/components/SuccessMsg";
 import FlashState from "@/FlashState";
 import CloseIcon from "@/assets/hugeIcons/Close";
-import { useNavigate } from "react-router-dom";
 import { columns } from "./columns";
 import { DataTable } from "./dataTable";
 
@@ -166,30 +161,7 @@ const ProductIndex: React.FC = () => {
 
       <div className="flex-1 flex flex-col py-10 px-10">
         <SuccessMsg msg={successMessage} />
-        <div id="filter" className="bg-white py-5 rounded-xl border">
-          <div className="flex px-5 ">
-            <SearchBar />
-
-            <div
-              id="buttonField"
-              className="flex px-4 items-center gap-2 ml-auto"
-            >
-              <Button
-                text={"import"}
-                icon={<CloudUploadIcon size={16} />}
-                onClick={() => {
-                  console.log("adad");
-                  window.location.reload();
-                }}
-              />
-              <Button text={"export"} icon={<CloudDownloadIcon size={16} />} />
-              <AddButton
-                text={"Add Product"}
-                location={"/product/create"}
-              ></AddButton>
-            </div>
-          </div>
-        </div>
+       
         <DataTable columns={productColumns} data={products} />
       </div>
     </AuthLayout>

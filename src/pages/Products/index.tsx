@@ -172,7 +172,7 @@ const ProductIndex: React.FC = () => {
 
         <div id="filter" className="bg-white py-5 rounded-xl border">
           <div className="flex px-5 ">
-            <SearchBar />
+            {/* <SearchBar /> */}
 
             <div
               id="buttonField"

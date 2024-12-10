@@ -12,7 +12,7 @@ import SearchBar from "@/components/SearchBar2";
 import Button from "@/components/Button";
 import MaintenanceHeader from "@/components/MaintenanceHeader";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { BASE_URL } from "@/config";
 import { Products, DeleteProduct } from "@/Types/type";
@@ -24,7 +24,7 @@ import { columns } from "./columns";
 import { DataTable } from "./dataTable";
 
 const ProductIndex: React.FC = () => {
-  const navigate = useNavigate();
+  console.log("rerender");
   const [products, setProducts] = useState<Products[] | []>([]);
   const [deleteModalShow, setDeleteModalShow] = useState<boolean>(false);
   const [deleteProduct, setDeleteProduct] = useState<null | DeleteProduct>(
@@ -46,7 +46,6 @@ const ProductIndex: React.FC = () => {
         setDeleteProduct(null);
       }
       fetchProduct();
-      console.log("refresh");
       setShouldRefresh(false);
     }
   }, [shouldRefresh]);
@@ -73,15 +72,12 @@ const ProductIndex: React.FC = () => {
     }
   };
 
-  const onDelete = (value: Products) => {
-    const id = value.id;
-    const name = value.name;
+  const onDelete = useCallback((value: Products) => {
+    const { id, name } = value;
     setDeleteModalShow(true);
-    setDeleteProduct({
-      id,
-      name,
-    });
-  };
+    setDeleteProduct({ id, name });
+  }, []);
+
   const closeDeleteModal: () => void = () => {
     setDeleteModalShow(false);
     setDeleteProduct(null);
@@ -103,7 +99,7 @@ const ProductIndex: React.FC = () => {
     }
   };
 
-  const productColumns = columns;
+  const productColumns = useMemo(() => columns({ onDelete }), [onDelete]);
   return (
     <AuthLayout>
       {deleteModalShow && (
@@ -194,7 +190,7 @@ const ProductIndex: React.FC = () => {
             </div>
           </div>
         </div>
-        <DataTable columns={productColumns({ onDelete })} data={products} />
+        <DataTable columns={productColumns} data={products} />
       </div>
     </AuthLayout>
   );

@@ -4,7 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import { Delete02Icon, ViewIcon, PencilEdit02Icon } from "hugeicons-react";
 import DataTableRowActions from "./dataTableRowAction";
-
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 interface ProductColumnProps {
   onDelete: (value: Products) => void;
 }
@@ -13,14 +14,40 @@ export const columns = ({
 }: ProductColumnProps): ColumnDef<Products>[] => [
   {
     accessorKey: "index",
-    header: "#",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="h-auto hover:bg-gray-200"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          #
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       return <span className="text-left">{row.index + 1}</span>;
+    },
+    sortingFn: (rowA, rowB, columnId) => {
+      // Custom sorting function to sort by index
+      return rowA.index - rowB.index;
     },
   },
   {
     accessorKey: "name",
-    header: "product info",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="h-auto hover:bg-gray-200"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Product Info
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       return (
         <div className="flex gap-3 items-center">
@@ -38,7 +65,18 @@ export const columns = ({
   },
   {
     accessorKey: "category",
-    header: "category",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="h-auto hover:bg-gray-200"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Category
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       return (
         <div className="bg-slate-100 px-4 py-2 rounded-md inline capitalize font-semibold text-slate-500">
@@ -50,7 +88,18 @@ export const columns = ({
 
   {
     accessorKey: "price",
-    header: "price",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="h-auto hover:bg-gray-200"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const amount: number = parseFloat(row.getValue("price"));
       const formattedAmount = new Intl.NumberFormat("ms-MY", {

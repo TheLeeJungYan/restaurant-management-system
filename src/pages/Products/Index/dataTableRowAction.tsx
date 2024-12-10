@@ -28,7 +28,9 @@ const DataTableRowActions = <TData,>({
       </Link>
       <button
         className="bg-gray-50 text-gray-500  hover:border-red-500 hover:text-white hover:bg-red-500 hover:shadow-md"
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
+          console.log("adad");
           onDelete(row.original);
         }}
       >

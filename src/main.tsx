@@ -10,11 +10,11 @@ import AuthProvider from "./context/AuthContext.tsx";
 import "non.geist";
 import "non.geist/mono";
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <AuthProvider>
-      <CustomProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </CustomProvider>
-    </AuthProvider>
-  </StrictMode>
+  // <StrictMode>
+  <AuthProvider>
+    <CustomProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </CustomProvider>
+  </AuthProvider>
+  // </StrictMode>
 );

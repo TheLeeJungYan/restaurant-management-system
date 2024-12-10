@@ -25,6 +25,7 @@ import CloseIcon from "../../assets/hugeIcons/Close";
 import { useNavigate } from "react-router-dom";
 
 const ProductIndex: React.FC = () => {
+  console.log("rerender");
   const navigate = useNavigate();
   const [products, setProducts] = useState<Products[] | []>([]);
   const [deleteModalShow, setDeleteModalShow] = useState<boolean>(false);
@@ -37,6 +38,7 @@ const ProductIndex: React.FC = () => {
 
   useEffect(() => {
     if (shouldRefresh) {
+      console.log("refresh");
       if (deleting) {
         FlashState.set(
           "product-success-msg",
